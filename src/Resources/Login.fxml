@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="152.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="71.01171493530273">
+         <font>
+            <Font size="15.0" />
+         </font></Text>
+      <TextField fx:id="usernameField" layoutX="234.0" layoutY="167.0" />
+      <Text layoutX="152.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="71.01171493530273">
+         <font>
+            <Font size="15.0" />
+         </font></Text>
+      <PasswordField fx:id="passwordField" layoutX="234.0" layoutY="217.0" />
+      <Label fx:id="locationLabel" layoutX="14.0" layoutY="566.0" prefHeight="20.0" prefWidth="294.0" />
+      <Button layoutX="283.0" layoutY="265.0" mnemonicParsing="false" onAction="#onLogin" text="Log In" />
+      <Text layoutX="108.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CorpoCorp Co. Scheduling System">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
