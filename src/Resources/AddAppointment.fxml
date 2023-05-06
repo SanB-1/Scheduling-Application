@@ -11,12 +11,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<TabPane prefHeight="700.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane prefHeight="700.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddAppointment">
    <tabs>
-      <Tab fx:id="mainMenuTab" disable="true" text="Main Menu" />
-      <Tab fx:id="addCTab" disable="true" text="Add Customer" />
-      <Tab fx:id="modCTab" disable="true" text="Modify Customer" />
-      <Tab fx:id="addAppTab" text="Add Appointment">
+      <Tab disable="true" text="Main Menu" />
+      <Tab disable="true" text="Add Customer" />
+      <Tab disable="true" text="Modify Customer" />
+      <Tab text="Add Appointment">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -52,6 +52,6 @@
             </AnchorPane>
          </content>
       </Tab>
-      <Tab fx:id="modAppTab" disable="true" text="Modify Appointment" />
+      <Tab disable="true" text="Modify Appointment" />
    </tabs>
 </TabPane>

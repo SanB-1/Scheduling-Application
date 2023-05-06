@@ -11,15 +11,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ModifyAppointment">
    <children>
       <TabPane prefHeight="700.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab fx:id="mainMenuTab" disable="true" text="Main Menu" />
-            <Tab fx:id="addCTab" disable="true" text="Add Customer" />
-            <Tab fx:id="modCTab" disable="true" text="Modify Customer" />
-            <Tab fx:id="addAppTab" disable="true" text="Add Appointment" />
-            <Tab fx:id="modAppTab" text="Modify Appointment">
+            <Tab disable="true" text="Main Menu" />
+            <Tab disable="true" text="Add Customer" />
+            <Tab disable="true" text="Modify Customer" />
+            <Tab disable="true" text="Add Appointment" />
+            <Tab text="Modify Appointment">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

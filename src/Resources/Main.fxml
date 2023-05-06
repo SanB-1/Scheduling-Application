@@ -13,7 +13,7 @@
    <children>
       <TabPane prefHeight="700.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="mainMenuTab" text="Main Menu">
+          <Tab text="Main Menu">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -130,10 +130,10 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="addCTab" disable="true" text="Add Customer" />
-            <Tab fx:id="modCTab" disable="true" text="Modify Customer" />
-            <Tab fx:id="addAppTab" disable="true" text="Add Appointment" />
-            <Tab fx:id="modAppTab" disable="true" text="Modify Appointment" />
+          <Tab disable="true" text="Add Customer" />
+            <Tab disable="true" text="Modify Customer" />
+            <Tab disable="true" text="Add Appointment" />
+            <Tab disable="true" text="Modify Appointment" />
         </tabs>
       </TabPane>
    </children>
