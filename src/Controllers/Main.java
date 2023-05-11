@@ -22,11 +22,11 @@ public class Main {
     public TableColumn customerPhone;
 
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Resources/AddCustomer.fxml", "Customer Addition");
+        Helpers.nextScene(actionEvent, "/Views/AddCustomer.fxml", "Customer Addition");
     }
 
     public void onModifyCustomer(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Resources/ModifyCustomer.fxml", "Customer Modification");
+        Helpers.nextScene(actionEvent, "/Views/ModifyCustomer.fxml", "Customer Modification");
     }
 
     public void onDeleteCustomer(ActionEvent actionEvent) {
@@ -45,11 +45,11 @@ public class Main {
     public TableColumn appointmentUserID;
 
     public void onAddAppointment(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Resources/AddAppointment.fxml", "Appointment Addition");
+        Helpers.nextScene(actionEvent, "/Views/AddAppointment.fxml", "Appointment Addition");
     }
 
     public void onModifyAppointment(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Resources/ModifyAppointment.fxml", "Appointment Modification");
+        Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
     }
 
     public void onDeleteAppointment(ActionEvent actionEvent){
@@ -69,7 +69,7 @@ public class Main {
     public TableColumn monthUID;
 
     public void onModifyMAppointment(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Resources/ModifyAppointment.fxml", "Appointment Modification");
+        Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
     }
 
     public void onDeleteMAppointment(ActionEvent actionEvent) {
@@ -88,7 +88,7 @@ public class Main {
     public TableColumn weekUID;
 
     public void onModifyWAppointment(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Resources/ModifyAppointment.fxml", "Appointment Modification");
+        Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
     }
 
     public void onDeleteWAppointment(ActionEvent actionEvent) {

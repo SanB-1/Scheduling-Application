@@ -3,26 +3,45 @@ package Controllers;
 import Database.JDBC;
 import Utils.Helpers;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Login {
 
     public TextField usernameField;
     public PasswordField passwordField;
     public Label locationLabel;
+    public Label textUsername;
+    public Label textPassword;
+    public Button textLogIn;
+    public Label textTitle;
+    public String error;
+
+    public void initialize (){
+        System.out.println(Locale.getDefault());
+        ResourceBundle rb = ResourceBundle.getBundle("Utils/nat", Locale.getDefault());
+        error = rb.getString("error");
+        textTitle.setText(rb.getString("title"));
+        textUsername.setText(rb.getString("Username"));
+        textPassword.setText(rb.getString("Password"));
+        textLogIn.setText(rb.getString("LogIn"));
+    }
 
     public void onLogin(ActionEvent actionEvent) throws SQLException, IOException {
         if (validate(usernameField.getText(), passwordField.getText())){
-            Helpers.nextScene(actionEvent, "/Resources/Main.fxml", "Main Menu");
+            Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
         } else {
-            Helpers.displayMessage("Invalid Credentials.");
+            Helpers.displayMessage(error);
         }
     }
 
