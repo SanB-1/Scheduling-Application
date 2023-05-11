@@ -1,7 +1,10 @@
 package Controllers;
 
+import Utils.Helpers;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+
+import java.io.IOException;
 
 public class Main {
 
@@ -18,16 +21,15 @@ public class Main {
     public TableColumn customerZIP;
     public TableColumn customerPhone;
 
-    public void onAddCustomer(ActionEvent actionEvent) {
+    public void onAddCustomer(ActionEvent actionEvent) throws IOException {
+        Helpers.nextScene(actionEvent, "/Resources/AddCustomer.fxml", "Customer Addition");
     }
 
-    public void onModifyCustomer(ActionEvent actionEvent) {
+    public void onModifyCustomer(ActionEvent actionEvent) throws IOException {
+        Helpers.nextScene(actionEvent, "/Resources/ModifyCustomer.fxml", "Customer Modification");
     }
 
     public void onDeleteCustomer(ActionEvent actionEvent) {
-    }
-
-    public void onAddAppointment(ActionEvent actionEvent) {
     }
 
     public TableView appointments;
@@ -42,9 +44,16 @@ public class Main {
     public TableColumn appointmentCustomerID;
     public TableColumn appointmentUserID;
 
-    public void onModifyAppointment(ActionEvent actionEvent) {
+    public void onAddAppointment(ActionEvent actionEvent) throws IOException {
+        Helpers.nextScene(actionEvent, "/Resources/AddAppointment.fxml", "Appointment Addition");
     }
-    public void onDeleteAppointment(ActionEvent actionEvent) {
+
+    public void onModifyAppointment(ActionEvent actionEvent) throws IOException {
+        Helpers.nextScene(actionEvent, "/Resources/ModifyAppointment.fxml", "Appointment Modification");
+    }
+
+    public void onDeleteAppointment(ActionEvent actionEvent){
+
     }
 
     public TableView monthAppointments;
@@ -59,7 +68,8 @@ public class Main {
     public TableColumn monthCustID;
     public TableColumn monthUID;
 
-    public void onModifyMAppointment(ActionEvent actionEvent) {
+    public void onModifyMAppointment(ActionEvent actionEvent) throws IOException {
+        Helpers.nextScene(actionEvent, "/Resources/ModifyAppointment.fxml", "Appointment Modification");
     }
 
     public void onDeleteMAppointment(ActionEvent actionEvent) {
@@ -77,7 +87,8 @@ public class Main {
     public TableColumn weekCustID;
     public TableColumn weekUID;
 
-    public void onModifyWAppointment(ActionEvent actionEvent) {
+    public void onModifyWAppointment(ActionEvent actionEvent) throws IOException {
+        Helpers.nextScene(actionEvent, "/Resources/ModifyAppointment.fxml", "Appointment Modification");
     }
 
     public void onDeleteWAppointment(ActionEvent actionEvent) {
