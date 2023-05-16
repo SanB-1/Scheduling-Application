@@ -65,7 +65,6 @@ public class AddCustomer {
     }
 
     public void onSComboBox(ActionEvent actionEvent) throws SQLException {
-
     }
 
     private static int countryToID(String country) throws SQLException {

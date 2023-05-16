@@ -34,7 +34,7 @@ public abstract class CustomerDAO {
         String sql = "SELECT * FROM customers;";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
+        while (rs.next()){
             String id = rs.getString("Customer_ID");
             String name = rs.getString("Customer_Name");
             String address = rs.getString("Address");
