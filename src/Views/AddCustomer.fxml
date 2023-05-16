@@ -20,8 +20,8 @@
                      <children>
                         <TextField fx:id="addCustNameField" />
                         <TextField fx:id="addCustAddressField" />
-                        <ComboBox fx:id="addCustCountryBox" prefHeight="27.0" prefWidth="247.0" />
-                        <ComboBox fx:id="addCustStateBox" prefHeight="27.0" prefWidth="247.0" />
+                        <ComboBox fx:id="addCustCountryBox" onAction="#onCCombobox" prefHeight="27.0" prefWidth="247.0" />
+                        <ComboBox fx:id="addCustStateBox" disable="true" onAction="#onSComboBox" prefHeight="27.0" prefWidth="247.0" />
                         <TextField fx:id="addCustZipField" />
                         <TextField fx:id="addCustPhoneField" />
                      </children>

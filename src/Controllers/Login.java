@@ -7,12 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -26,9 +26,9 @@ public class Login {
     public Button textLogIn;
     public Label textTitle;
     public String error;
+    public static String currentUser;
 
     public void initialize (){
-        System.out.println(Locale.getDefault());
         ResourceBundle rb = ResourceBundle.getBundle("Utils/nat", Locale.getDefault());
         error = rb.getString("error");
         textTitle.setText(rb.getString("title"));
@@ -53,6 +53,7 @@ public class Login {
         while (rs.next()) {
             String pw = rs.getString("Password");
             if (pw.equals(password)){
+                currentUser = username;
                 return true;
             }
         }

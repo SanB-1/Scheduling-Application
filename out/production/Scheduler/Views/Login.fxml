@@ -13,17 +13,17 @@
       <PasswordField fx:id="passwordField" layoutX="234.0" layoutY="217.0" />
       <Label fx:id="locationLabel" layoutX="14.0" layoutY="360.0" prefHeight="20.0" prefWidth="294.0" />
       <Button fx:id="textLogIn" layoutX="283.0" layoutY="265.0" mnemonicParsing="false" onAction="#onLogin" text="Log In" />
-      <Label fx:id="textUsername" layoutX="153.0" layoutY="169.0" text="Username:">
+      <Label fx:id="textUsername" layoutX="82.0" layoutY="169.0" text="Username:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="textPassword" layoutX="152.0" layoutY="219.0" text="Password:">
+      <Label fx:id="textPassword" layoutX="84.0" layoutY="219.0" text="Password:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="textTitle" layoutX="108.0" layoutY="30.0" text="CorpoCorp Co. Scheduling System">
+      <Label fx:id="textTitle" layoutX="18.0" layoutY="31.0" text="CorpoCorp Co. Scheduling System">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
