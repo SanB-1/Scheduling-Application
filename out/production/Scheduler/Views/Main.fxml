@@ -20,12 +20,11 @@
                         <TableView fx:id="customerTable" layoutX="83.0" layoutY="86.0" prefHeight="200.0" prefWidth="914.0">
                            <columns>
                               <TableColumn fx:id="customerID" prefWidth="46.0" text="ID" />
-                              <TableColumn fx:id="customerName" prefWidth="174.5401611328125" text="Name" />
-                              <TableColumn fx:id="customerAddress" prefWidth="244.0" text="Address" />
-                              <TableColumn fx:id="customerZIP" minWidth="7.97900390625" prefWidth="113.0" text="Postal Code" />
-                              <TableColumn fx:id="customerRegion" prefWidth="89.0" text="Region" />
-                              <TableColumn fx:id="customerPhone" prefWidth="170.0" text="Phone Number" />
-                              <TableColumn fx:id="divID" prefWidth="75.0" text="Division ID" />
+                              <TableColumn fx:id="customerName" prefWidth="229.0" text="Name" />
+                              <TableColumn fx:id="customerAddress" prefWidth="232.0" text="Address" />
+                              <TableColumn fx:id="customerZIP" minWidth="7.97900390625" prefWidth="136.0" text="Postal Code" />
+                              <TableColumn fx:id="customerPhone" prefWidth="203.0" text="Phone Number" />
+                              <TableColumn fx:id="divID" prefWidth="67.0" text="Division ID" />
                            </columns>
                         </TableView>
                         <Text layoutX="83.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER RECORDS">

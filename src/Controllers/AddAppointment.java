@@ -51,10 +51,8 @@ public class AddAppointment {
         for (Contact c : coList) {
             addAppContactBox.getItems().add(c.getName());
         }
-
         addAppStartTimeBox.setItems(Helpers.times());
         addAppEndTimeBox.setItems(Helpers.times());
-
     }
 
     public void onAddAppAddB(ActionEvent actionEvent) throws SQLException, IOException {

@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -41,6 +40,7 @@ public class Main {
     public TableColumn<Customer, String> customerZIP;
     public TableColumn<Customer, String> customerPhone;
     public TableColumn<Customer, Integer> divID;
+
     public static Customer selectedCustomer;
 
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {
@@ -71,12 +71,17 @@ public class Main {
     public void onDeleteCustomer(ActionEvent actionEvent) throws SQLException {
         if (customerTable.getSelectionModel().isEmpty()){
             Helpers.displayMessage("Select a Customer.");
-        } else {
+        }
+        else if (!AppointmentDAO.appByCustID(customerTable.getSelectionModel().getSelectedItem().getID()).isEmpty()){
+            Helpers.displayMessage("Please delete all the related Appointments for this Customer.");
+        }
+        else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                     "Are you sure you would like to delete this customer?");
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.isPresent() && choice.get() == ButtonType.OK) {
                 Customer c = customerTable.getSelectionModel().getSelectedItem();
+                Helpers.displayMessage("Customer record for " + c.getName() + " deleted.");
                 CustomerDAO.delete(c.getID());
                 customerTable.getSelectionModel().clearSelection();
             }
@@ -95,14 +100,29 @@ public class Main {
     public TableColumn<Appointment, Integer> appointmentCustomerID;
     public TableColumn<Appointment, Integer> appointmentUserID;
     public TableColumn<Appointment, Integer> contact;
-    public TableColumn<Appointment, String> region;
 
     public void onAddAppointment(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/AddAppointment.fxml", "Appointment Addition");
     }
 
-    public void onModifyAppointment(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
+    public void onModifyAppointment(ActionEvent actionEvent) throws IOException, SQLException {
+        if (appointments.getSelectionModel().isEmpty()) {
+            Helpers.displayMessage("Select an Appointment.");
+        } else {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Views/ModifyAppointment.fxml"));
+            loader.load();
+
+            ModifyAppointment MAController = loader.getController();
+            MAController.popFields(appointments.getSelectionModel().getSelectedItem());
+
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root, 1080, 700);
+            stage.setTitle("Appointment Modification");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onDeleteAppointment(ActionEvent actionEvent) throws SQLException {
@@ -114,6 +134,7 @@ public class Main {
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.isPresent() && choice.get() == ButtonType.OK) {
                 Appointment a = appointments.getSelectionModel().getSelectedItem();
+                Helpers.displayMessage("Appointment number " + a.getID().toString() + " deleted.");
                 AppointmentDAO.delete(a.getID());
                 appointments.getSelectionModel().clearSelection();
             }

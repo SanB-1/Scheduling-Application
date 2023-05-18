@@ -63,7 +63,7 @@ public class ModifyCustomer {
         }
         else if (modCustNameField.getText().equals("") || modCustAddressField.getText().equals("") ||
                 modCustZipField.getText().equals("") || modCustPhoneField.getText().equals("")){
-            Helpers.displayMessage("Please complete all the fields.");
+            Helpers.displayMessage("Please fill all the fields.");
         }
         else if (modCustPhoneField.getText().length() < 10){
             Helpers.displayMessage("Please insert a valid phone number.");
