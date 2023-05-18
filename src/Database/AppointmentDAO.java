@@ -13,7 +13,7 @@ public class AppointmentDAO {
 
     public static void insert(String title, String description, String location, String type, Timestamp start,
                               Timestamp end, Timestamp createDate, String createBy, Timestamp lastUpdate,
-                              Timestamp lastUpdateBy, Integer customerID, Integer userID, Integer contactID)
+                              String lastUpdateBy, String customerID, String userID, String contactID)
             throws SQLException {
         String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End," +
                 " Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID)" +
@@ -28,10 +28,10 @@ public class AppointmentDAO {
         ps.setTimestamp(7, createDate);
         ps.setString(8, createBy);
         ps.setTimestamp(9, lastUpdate);
-        ps.setTimestamp(10, lastUpdateBy);
-        ps.setInt(11, customerID);
-        ps.setInt(12,userID);
-        ps.setInt(13, contactID);
+        ps.setString(10, lastUpdateBy);
+        ps.setInt(11, Integer.parseInt(customerID));
+        ps.setInt(12, Integer.parseInt(userID));
+        ps.setInt(13, Integer.parseInt(contactID));
         ps.executeUpdate();
     }
 
@@ -60,5 +60,18 @@ public class AppointmentDAO {
             app.add(appointment);
         }
         return app;
+    }
+
+    public static int delete(int aID) throws SQLException{
+        String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setInt(1, aID);
+        int rowsAffected = ps.executeUpdate();
+        if (rowsAffected >= 1){
+            System.out.println("Deletion Successful.");
+        } else{
+            System.out.println("Deletion Failed.");
+        }
+        return rowsAffected;
     }
 }

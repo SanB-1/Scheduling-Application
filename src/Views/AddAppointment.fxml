@@ -23,13 +23,13 @@
                   <VBox layoutX="482.0" layoutY="85.0" prefHeight="366.0" prefWidth="232.0" spacing="22.0">
                      <children>
                         <TextField fx:id="addAppIDField" disable="true" editable="false" />
-                        <TextField fx:id="addAppUIDField" />
-                        <TextField fx:id="addAppCustIDFIeld" />
+                        <ComboBox fx:id="addAppUserBox" prefHeight="27.0" prefWidth="248.0" />
+                        <ComboBox fx:id="addAppCustomerBox" prefHeight="27.0" prefWidth="248.0" />
                         <TextField fx:id="addAppTitleField" />
                         <TextField fx:id="addAppDescField" />
-                        <ComboBox fx:id="addAppLocBox" prefHeight="27.0" prefWidth="247.0" />
+                        <TextField fx:id="addAppLocationField" />
                         <ComboBox fx:id="addAppContactBox" prefHeight="27.0" prefWidth="248.0" />
-                        <ComboBox fx:id="addAppTypeBox" prefHeight="27.0" prefWidth="262.0" />
+                        <TextField fx:id="addAppTypeField" />
                         <DatePicker fx:id="addAppSelStartDate" prefHeight="27.0" prefWidth="317.0" />
                         <DatePicker fx:id="addAppSelEndDate" prefHeight="27.0" prefWidth="289.0" />
                      </children>

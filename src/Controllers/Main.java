@@ -45,7 +45,8 @@ public class Main {
         if (customerTable.getSelectionModel().isEmpty()){
             Helpers.displayMessage("Select a Customer.");
         } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this customer?");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Are you sure you would like to delete this customer?");
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.isPresent() && choice.get() == ButtonType.OK) {
                 Customer c = customerTable.getSelectionModel().getSelectedItem();
@@ -66,7 +67,8 @@ public class Main {
     public TableColumn<Appointment, Calendar> appointmentEndTime;
     public TableColumn<Appointment, Integer> appointmentCustomerID;
     public TableColumn<Appointment, Integer> appointmentUserID;
-    public TableColumn<Appointment, Integer> contactID;
+    public TableColumn<Appointment, Integer> contact;
+    public TableColumn<Appointment, String> region;
 
     public void onAddAppointment(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/AddAppointment.fxml", "Appointment Addition");
@@ -76,7 +78,20 @@ public class Main {
         Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
     }
 
-    public void onDeleteAppointment(ActionEvent actionEvent){
+    public void onDeleteAppointment(ActionEvent actionEvent) throws SQLException {
+        if (appointments.getSelectionModel().isEmpty()) {
+            Helpers.displayMessage("Select an Appointment.");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Are you sure you would like to delete this appointment?");
+            Optional<ButtonType> choice = alert.showAndWait();
+            if (choice.isPresent() && choice.get() == ButtonType.OK) {
+                Appointment a = appointments.getSelectionModel().getSelectedItem();
+                AppointmentDAO.delete(a.getID());
+                appointments.getSelectionModel().clearSelection();
+            }
+        }
+        refreshTables();
     }
 
     public TableView<Appointment> appointmentsM;
@@ -89,13 +104,26 @@ public class Main {
     public TableColumn<Appointment, Calendar> appointmentEndTimeM;
     public TableColumn<Appointment, Integer> appointmentCustomerIDM;
     public TableColumn<Appointment, Integer> appointmentUserIDM;
-    public TableColumn<Appointment, Integer> contactIDM;
+    public TableColumn<Appointment, Integer> contactM;
 
     public void onModifyMAppointment(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
     }
 
-    public void onDeleteMAppointment(ActionEvent actionEvent) {
+    public void onDeleteMAppointment(ActionEvent actionEvent) throws SQLException {
+        if (appointmentsM.getSelectionModel().isEmpty()){
+            Helpers.displayMessage("Select an Appointment.");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Are you sure you would like to delete this appointment?");
+            Optional<ButtonType> choice = alert.showAndWait();
+            if (choice.isPresent() && choice.get() == ButtonType.OK) {
+                Appointment a = appointmentsM.getSelectionModel().getSelectedItem();
+                AppointmentDAO.delete(a.getID());
+                appointmentsM.getSelectionModel().clearSelection();
+                refreshTables();
+            }
+        }
     }
 
     public TableView<Appointment> appointmentsW;
@@ -108,13 +136,26 @@ public class Main {
     public TableColumn<Appointment, Calendar> appointmentEndTimeW;
     public TableColumn<Appointment, Integer> appointmentCustomerIDW;
     public TableColumn<Appointment, Integer> appointmentUserIDW;
-    public TableColumn<Appointment, Integer> contactIDW;
+    public TableColumn<Appointment, Integer> contactW;
 
     public void onModifyWAppointment(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
     }
 
-    public void onDeleteWAppointment(ActionEvent actionEvent) {
+    public void onDeleteWAppointment(ActionEvent actionEvent) throws SQLException {
+        if (appointmentsM.getSelectionModel().isEmpty()){
+            Helpers.displayMessage("Select an Appointment.");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Are you sure you would like to delete this appointment?");
+            Optional<ButtonType> choice = alert.showAndWait();
+            if (choice.isPresent() && choice.get() == ButtonType.OK) {
+                Appointment a = appointmentsM.getSelectionModel().getSelectedItem();
+                AppointmentDAO.delete(a.getID());
+                appointmentsM.getSelectionModel().clearSelection();
+                refreshTables();
+            }
+        }
     }
 
     private void refreshTables() throws SQLException {
@@ -136,7 +177,7 @@ public class Main {
         appointmentEndTime.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         appointmentUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
-        contactID.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        contact.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
         appointmentsM.setItems(AppointmentDAO.select());
         appointmentIDM.setCellValueFactory(new PropertyValueFactory<>("ID"));
@@ -148,7 +189,7 @@ public class Main {
         appointmentEndTimeM.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentCustomerIDM.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         appointmentUserIDM.setCellValueFactory(new PropertyValueFactory<>("userID"));
-        contactIDM.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        contactM.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
         appointmentsW.setItems(AppointmentDAO.select());
         appointmentIDW.setCellValueFactory(new PropertyValueFactory<>("ID"));
@@ -160,6 +201,6 @@ public class Main {
         appointmentEndTimeW.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentCustomerIDW.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         appointmentUserIDW.setCellValueFactory(new PropertyValueFactory<>("userID"));
-        contactIDW.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        contactW.setCellValueFactory(new PropertyValueFactory<>("contactID"));
     }
 }

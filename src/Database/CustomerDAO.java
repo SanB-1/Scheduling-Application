@@ -4,6 +4,7 @@ import Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public abstract class CustomerDAO {
@@ -91,5 +92,18 @@ public abstract class CustomerDAO {
             System.out.println("Deletion Failed.");
         }
         return rowsAffected;
+    }
+
+    public static ArrayList<String> customerIDList() throws SQLException {
+        ArrayList<String> cList = new ArrayList<>();
+        String sql = "SELECT * FROM customers";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            String id = rs.getString("Customer_ID");
+            cList.add(id);
+        }
+        return cList;
     }
 }
