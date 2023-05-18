@@ -21,8 +21,8 @@
                      <children>
                         <TextField fx:id="modCustNameField" />
                         <TextField fx:id="modCustAddressField" />
-                        <ComboBox fx:id="modCustCountryBox" prefHeight="27.0" prefWidth="247.0" />
-                        <ComboBox fx:id="modCustStateBox" prefHeight="27.0" prefWidth="247.0" />
+                        <ComboBox fx:id="modCustCountryBox" onAction="#onMCountryComboBox" prefHeight="27.0" prefWidth="247.0" />
+                        <ComboBox fx:id="modCustStateBox" onAction="#onMStateComboBox" prefHeight="27.0" prefWidth="247.0" />
                         <TextField fx:id="modCustZipField" />
                         <TextField fx:id="modCustPhoneField" />
                      </children>
@@ -35,6 +35,8 @@
                   <Text layoutX="370.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State:" wrappingWidth="105.47866439819336" />
                   <Text layoutX="370.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code:" wrappingWidth="105.47866439819336" />
                   <Text layoutX="370.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number:" wrappingWidth="105.47866439819336" />
+                  <TextField fx:id="modCustIDField" disable="true" editable="false" layoutX="478.0" layoutY="137.0" prefHeight="25.0" prefWidth="232.0" />
+                  <Text layoutX="369.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" wrappingWidth="105.47866439819336" />
                </children>
             </AnchorPane>
          </content>

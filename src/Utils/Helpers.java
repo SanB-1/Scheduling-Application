@@ -10,6 +10,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public abstract class Helpers {
@@ -35,6 +38,23 @@ public abstract class Helpers {
         errorAlert.setHeaderText(message);
         errorAlert.showAndWait();
     }
+    public static Timestamp currentSystemToUTC(){
+        LocalDateTime dateTime = new Timestamp(System.currentTimeMillis()).toLocalDateTime();
+        ZonedDateTime systemZonedDateTime = dateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime utcZonedDateTime = systemZonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
+        LocalDateTime utcLocalDateTime = utcZonedDateTime.toLocalDateTime();
+        return Timestamp.valueOf(utcLocalDateTime);
+    }
+
+    public static Timestamp systemToUTC(Timestamp time){
+        LocalDateTime dateTime = time.toLocalDateTime();
+        ZonedDateTime systemZonedDateTime = dateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime utcZonedDateTime = systemZonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
+        LocalDateTime utcLocalDateTime = utcZonedDateTime.toLocalDateTime();
+        return Timestamp.valueOf(utcLocalDateTime);
+    }
+
+
 
     public static ObservableList<String> times() {
         String[] timeArray = {
@@ -65,6 +85,5 @@ public abstract class Helpers {
         ObservableList<String> times = FXCollections.observableArrayList();
         times.addAll(timeArray);
         return times;
-
     }
 }

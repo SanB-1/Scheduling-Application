@@ -54,34 +54,28 @@ public abstract class CustomerDAO {
 
     }
 
-    public static int update(int cID, int cDivID, String cName, String cAddress, String cZip, String cPhone,
-                             Date cCreatedOn, String cCreatedBy, Timestamp cLastUpdate, String cLastUpdateBy)
+    public static void update(int cID, int cDivID, String cName, String cAddress, String cZip, String cPhone,
+                             Timestamp cCreatedOn, String cCreatedBy, Timestamp cLastUpdate, String cLastUpdateBy)
         throws SQLException {
-        String sql = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, " +
-                "Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES(?, ?, ?, ?, ?, ? ,? ,?, ?) WHERE " +
-                "Customer_ID = ?";
+        String sql = "UPDATE customers " +
+                "SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Create_Date = ?, Created_By = ?, " +
+                "Last_Update = ?, Last_Updated_By = ?, Division_ID = ?" +
+                " WHERE Customer_ID = ?;";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
-        ps.setInt(1, cID);
-        ps.setInt(2, cDivID);
-        ps.setString(3, cName);
-        ps.setString(3, cAddress);
-        ps.setString(4, cZip);
-        ps.setString(5, cPhone);
-        ps.setDate(6, cCreatedOn);
-        ps.setString(7, cCreatedBy);
-        ps.setTimestamp(8, cLastUpdate);
-        ps.setString(9, cLastUpdateBy);
+        ps.setString(1, cName);
+        ps.setString(2, cAddress);
+        ps.setString(3, cZip);
+        ps.setString(4, cPhone);
+        ps.setTimestamp(5, cCreatedOn);
+        ps.setString(6, cCreatedBy);
+        ps.setTimestamp(7, cLastUpdate);
+        ps.setString(8, cLastUpdateBy);
+        ps.setInt(9, cDivID);
         ps.setInt(10, cID);
-        int rowsAffected = ps.executeUpdate();
-        if (rowsAffected > 1){
-            System.out.println("Update Successfully.");
-        } else{
-            System.out.println("Update Failed.");
-        }
-        return rowsAffected;
+        ps.executeUpdate();
     }
 
-    public static int delete(int cID) throws SQLException{
+    public static void delete(int cID) throws SQLException{
         String sql = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
         ps.setInt(1, cID);
@@ -91,7 +85,6 @@ public abstract class CustomerDAO {
         } else{
             System.out.println("Deletion Failed.");
         }
-        return rowsAffected;
     }
 
     public static ArrayList<String> customerIDList() throws SQLException {

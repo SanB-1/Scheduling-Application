@@ -6,15 +6,24 @@ import Model.Appointment;
 import Model.Customer;
 import Utils.Helpers;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Optional;
 
 public class Main {
 
+    public void Main() throws SQLException {
+        refreshTables();
+    }
     public void initialize() throws SQLException{
         refreshTables();
     }
@@ -32,13 +41,31 @@ public class Main {
     public TableColumn<Customer, String> customerZIP;
     public TableColumn<Customer, String> customerPhone;
     public TableColumn<Customer, Integer> divID;
+    public static Customer selectedCustomer;
 
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {
+        selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
         Helpers.nextScene(actionEvent, "/Views/AddCustomer.fxml", "Customer Addition");
     }
 
-    public void onModifyCustomer(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Views/ModifyCustomer.fxml", "Customer Modification");
+    public void onModifyCustomer(ActionEvent actionEvent) throws IOException, SQLException {
+        if (customerTable.getSelectionModel().isEmpty()) {
+            Helpers.displayMessage("Select a Customer.");
+        } else {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Views/ModifyCustomer.fxml"));
+            loader.load();
+
+            ModifyCustomer MCController = loader.getController();
+            MCController.popFields(customerTable.getSelectionModel().getSelectedItem());
+
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root, 1080, 700);
+            stage.setTitle("Customer Modification");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onDeleteCustomer(ActionEvent actionEvent) throws SQLException {

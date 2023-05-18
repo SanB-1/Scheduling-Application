@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -35,6 +36,7 @@ public class Login {
         textUsername.setText(rb.getString("Username"));
         textPassword.setText(rb.getString("Password"));
         textLogIn.setText(rb.getString("LogIn"));
+        locationLabel.setText(String.valueOf(ZoneId.systemDefault()));
     }
 
     public void onLogin(ActionEvent actionEvent) throws SQLException, IOException {
