@@ -84,10 +84,19 @@ public class ModifyAppointment {
                 || modAppStartDate.getValue() == null || modAppEndDate.getValue() == null ||
                 modAppStartBox.getSelectionModel().getSelectedItem() == null ||
                 modAppEndBox.getSelectionModel().getSelectedItem() == null){
-            Helpers.displayMessage("Please fill all the fields.");
+            Helpers.displayMessage("Please complete all the fields.");
         }
         else if (modAppStartDate.getValue().isAfter(modAppEndDate.getValue())){
             Helpers.displayMessage("Invalid date/time combinations.");
+        }
+        /*
+        else if (Helpers.systemToEST(start).getHours() < 8 || Helpers.systemToEST(end).getHours() > 22){
+            Helpers.displayMessage("Appointment not within business hours ( 8AM to 10PM EST).");
+        }
+         */
+        else if (AppointmentDAO.overlap(start, Integer.parseInt(modAppIDFIeld.getText()),
+                Integer.parseInt(modAppCustIDBox.getSelectionModel().getSelectedItem()))){
+            Helpers.displayMessage("This appointment is overlapping with a another appointment for the same customer.");
         }
         else {
             AppointmentDAO.update(modAppTitleField.getText(), modAppDescriptionField.getText(),

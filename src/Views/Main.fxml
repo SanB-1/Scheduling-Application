@@ -127,6 +127,7 @@
                             </Tab>
                           </tabs>
                         </TabPane>
+                        <Button layoutX="981.0" layoutY="11.0" mnemonicParsing="false" onAction="#onMakeReports" text="Make reports" />
                      </children>
                   </AnchorPane>
             </content>

@@ -5,6 +5,7 @@ import Database.CustomerDAO;
 import Model.Appointment;
 import Model.Customer;
 import Utils.Helpers;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +25,10 @@ public class Main {
 
     public void initialize() throws SQLException{
         refreshTables();
+    }
+
+    public void onMakeReports(ActionEvent actionEvent) {
+
     }
 
     public Tab mainMenuTab;

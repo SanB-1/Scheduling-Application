@@ -38,7 +38,7 @@ public class AddAppointment {
     public AddAppointment() throws SQLException {
     }
 
-    public void initialize() throws SQLException {
+    public void initialize() {
         for (String id : cList) {
             addAppCustomerBox.getItems().add(id);
         }
@@ -54,7 +54,7 @@ public class AddAppointment {
         addAppEndTimeBox.setItems(Helpers.times());
     }
 
-    public void onAddAppAddB(ActionEvent actionEvent) {
+    public void onAddAppAddB(ActionEvent actionEvent) throws SQLException {
 
         Timestamp start = Timestamp.valueOf(
                 addAppSelStartDate.getValue().toString() + " " + addAppStartTimeBox.getValue() + ":00.000");
@@ -64,7 +64,22 @@ public class AddAppointment {
         if (start.after(end)){
             Helpers.displayMessage("Starting time has to be before Ending time.");
         }
-
+        else if (addAppUserBox.getSelectionModel().getSelectedItem() == null ||
+                addAppCustomerBox.getSelectionModel().getSelectedItem() == null || addAppTitleField.getText().equals("")
+                || addAppDescField.getText().equals("") || addAppLocationField.getText().equals("") ||
+                addAppContactBox.getSelectionModel().getSelectedItem() == null || addAppTypeField.getText().equals("")
+                || addAppSelStartDate.getValue() == null || addAppSelEndDate.getValue() == null ||
+                addAppStartTimeBox.getSelectionModel().getSelectedItem() == null ||
+                addAppEndTimeBox.getSelectionModel().getSelectedItem() == null){
+            Helpers.displayMessage("Please complete all the fields.");
+        }
+        else if (Helpers.systemToEST(start).getHours() < 8 || Helpers.systemToEST(end).getHours() > 22){
+            Helpers.displayMessage("Appointment not within business hours ( 8AM to 10PM EST).");
+        }
+        else if (AppointmentDAO.overlap(start, -100,
+                Integer.parseInt(addAppCustomerBox.getSelectionModel().getSelectedItem()))){
+            Helpers.displayMessage("This appointment is overlapping with a another appointment for the same customer.");
+        }
         else{
             try {
                 AppointmentDAO.insert(addAppTitleField.getText(), addAppDescField.getText(),

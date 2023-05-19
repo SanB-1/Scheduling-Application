@@ -38,27 +38,27 @@ public abstract class Helpers {
     }
 
     public static Timestamp utcToSystem(Timestamp time) {
-        LocalDateTime DateTime = time.toLocalDateTime();
-        ZonedDateTime ZonedDateTime = DateTime.atZone(ZoneOffset.UTC);
-        ZonedDateTime systemZonedDateTime = ZonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
+        LocalDateTime dateTime = time.toLocalDateTime();
+        ZonedDateTime zonedDateTime = dateTime.atZone(ZoneOffset.UTC);
+        ZonedDateTime systemZonedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
         LocalDateTime systemLocalDateTime = systemZonedDateTime.toLocalDateTime();
         return Timestamp.valueOf(systemLocalDateTime);
     }
 
     public static Timestamp systemToUTC(Timestamp time){
         LocalDateTime dateTime = time.toLocalDateTime();
-        ZonedDateTime ZonedDateTime = dateTime.atZone(ZoneId.systemDefault());
-        ZonedDateTime utcZonedDateTime = ZonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
+        ZonedDateTime zonedDateTime = dateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime utcZonedDateTime = zonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
         LocalDateTime utcLocalDateTime = utcZonedDateTime.toLocalDateTime();
         return Timestamp.valueOf(utcLocalDateTime);
     }
 
-    public static Timestamp utcToEST(Timestamp time) {
-        LocalDateTime DateTime = time.toLocalDateTime();
-        ZonedDateTime ZonedDateTime = DateTime.atZone(ZoneOffset.UTC);
-        ZonedDateTime easternZonedDateTime = ZonedDateTime.withZoneSameInstant(ZoneId.of("America/New_York"));
-        LocalDateTime easternLocalDateTime = easternZonedDateTime.toLocalDateTime();
-        return Timestamp.valueOf(easternLocalDateTime);
+    public static Timestamp systemToEST(Timestamp time) {
+        LocalDateTime dateTime = time.toLocalDateTime();
+        ZonedDateTime zonedDateTime = dateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime estZonedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("America/New_York"));
+        LocalDateTime estLocalDateTime = estZonedDateTime.toLocalDateTime();
+        return Timestamp.valueOf(estLocalDateTime);
     }
 
     public static ObservableList<String> times() {

@@ -1,5 +1,6 @@
 package Database;
 
+import Controllers.Login;
 import Model.Appointment;
 import Utils.Helpers;
 import com.sun.jdi.IntegerType;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class AppointmentDAO {
 
@@ -131,5 +133,55 @@ public class AppointmentDAO {
             app.add(appointment);
         }
         return app;
+    }
+
+    public static boolean overlap(Timestamp start, int aID, int cID) throws SQLException {
+        String sql = "SELECT Title, Appointment_ID, Customer_ID FROM appointments " +
+                "WHERE ? BETWEEN Start AND End " +
+                "AND ? <> Appointment_ID " +
+                "AND ? = Customer_ID;";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setTimestamp(1, Helpers.systemToUTC(start));
+        ps.setInt(3, cID);
+        ps.setInt(2, aID);
+        ResultSet rs = ps.executeQuery();
+        System.out.println(Helpers.systemToUTC(start));
+        System.out.println(cID);
+        System.out.println(aID);
+        return rs.next();
+    }
+
+    public static ArrayList<Appointment> within15() throws SQLException {
+        String sql = "SELECT * FROM appointments \n" +
+                "WHERE TIMESTAMPDIFF(MINUTE, ?, Start) <= 15\n" +
+                "AND User_ID = ?\n" +
+                "AND ? <= Start;";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setTimestamp(1, Helpers.systemToUTC(new Timestamp(System.currentTimeMillis())));
+        ps.setInt(2, Login.currentUserID);
+        ps.setTimestamp(3, Helpers.systemToUTC(new Timestamp(System.currentTimeMillis())));
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Appointment> list = new ArrayList<>();
+        while (rs.next()){
+            Integer id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            Timestamp createDate = rs.getTimestamp("Create_Date");
+            String createdBy = rs.getString("Created_By");
+            Timestamp lastUpdate = rs.getTimestamp("Last_Update");
+            String lastUpdateBy = rs.getString("Last_Updated_By");
+            Integer customerID = rs.getInt("Customer_ID");
+            Integer userID = rs.getInt("User_ID");
+            Integer contactID = rs.getInt("Contact_ID");
+            Appointment appointment = new Appointment(id, title, description, location, type, Helpers.utcToSystem(start)
+                    , Helpers.utcToSystem(end), Helpers.utcToSystem(createDate), createdBy,
+                    Helpers.utcToSystem(lastUpdate), lastUpdateBy, customerID, userID, contactID);
+            list.add(appointment);
+        }
+        return list;
     }
 }
