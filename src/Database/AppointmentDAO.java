@@ -1,6 +1,7 @@
 package Database;
 
 import Model.Appointment;
+import Utils.Helpers;
 import com.sun.jdi.IntegerType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,11 +25,11 @@ public class AppointmentDAO {
         ps.setString(2, description);
         ps.setString(3, location);
         ps.setString(4, type);
-        ps.setTimestamp(5, start);
-        ps.setTimestamp(6, end);
-        ps.setTimestamp(7, createDate);
+        ps.setTimestamp(5, Helpers.systemToUTC(start));
+        ps.setTimestamp(6, Helpers.systemToUTC(end));
+        ps.setTimestamp(7, Helpers.systemToUTC(createDate));
         ps.setString(8, createBy);
-        ps.setTimestamp(9, lastUpdate);
+        ps.setTimestamp(9, Helpers.systemToUTC(lastUpdate));
         ps.setString(10, lastUpdateBy);
         ps.setInt(11, Integer.parseInt(customerID));
         ps.setInt(12, Integer.parseInt(userID));
@@ -56,11 +57,38 @@ public class AppointmentDAO {
             Integer customerID = rs.getInt("Customer_ID");
             Integer userID = rs.getInt("User_ID");
             Integer contactID = rs.getInt("Contact_ID");
-            Appointment appointment = new Appointment(id, title, description, location, type, start, end, createDate,
-                    createdBy, lastUpdate, lastUpdateBy, customerID, userID, contactID);
+            Appointment appointment = new Appointment(id, title, description, location, type, Helpers.utcToSystem(start)
+                    , Helpers.utcToSystem(end), Helpers.utcToSystem(createDate), createdBy,
+                    Helpers.utcToSystem(lastUpdate), lastUpdateBy, customerID, userID, contactID);
             app.add(appointment);
         }
         return app;
+    }
+
+    public static void update(String title, String description, String location, String type, Timestamp start,
+                              Timestamp end, Timestamp createDate, String createBy, Timestamp lastUpdate,
+                              String lastUpdateBy, String customerID, String userID, String contactID, String ID)
+            throws SQLException {
+        String sql = "UPDATE appointments " +
+                "SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Create_Date = ?," +
+                " Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ?" +
+                " WHERE Appointment_ID = ?;";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, Helpers.systemToUTC(start));
+        ps.setTimestamp(6, Helpers.systemToUTC(end));
+        ps.setTimestamp(7, Helpers.systemToUTC(createDate));
+        ps.setString(8, createBy);
+        ps.setTimestamp(9, Helpers.systemToUTC(lastUpdate));
+        ps.setString(10, lastUpdateBy);
+        ps.setInt(11, Integer.parseInt(customerID));
+        ps.setInt(12, Integer.parseInt(userID));
+        ps.setInt(13, Integer.parseInt(contactID));
+        ps.setInt(14, Integer.parseInt(ID));
+        ps.executeUpdate();
     }
 
     public static int delete(int aID) throws SQLException{
@@ -97,8 +125,9 @@ public class AppointmentDAO {
             Integer customerID = rs.getInt("Customer_ID");
             Integer userID = rs.getInt("User_ID");
             Integer contactID = rs.getInt("Contact_ID");
-            Appointment appointment = new Appointment(id, title, description, location, type, start, end, createDate,
-                    createdBy, lastUpdate, lastUpdateBy, customerID, userID, contactID);
+            Appointment appointment = new Appointment(id, title, description, location, type, Helpers.utcToSystem(start)
+                    , Helpers.utcToSystem(end), Helpers.utcToSystem(createDate), createdBy,
+                    Helpers.utcToSystem(lastUpdate), lastUpdateBy, customerID, userID, contactID);
             app.add(appointment);
         }
         return app;

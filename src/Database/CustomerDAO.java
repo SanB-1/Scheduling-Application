@@ -1,6 +1,7 @@
 package Database;
 
 import Model.Customer;
+import Utils.Helpers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
@@ -22,9 +23,9 @@ public abstract class CustomerDAO {
         ps.setString(2, cAddress);
         ps.setString(3, cZip);
         ps.setString(4, cPhone);
-        ps.setTimestamp(5, cCreatedOn);
+        ps.setTimestamp(5, Helpers.systemToUTC(cCreatedOn));
         ps.setString(6, cCreatedBy);
-        ps.setTimestamp(7, cLastUpdate);
+        ps.setTimestamp(7, Helpers.systemToUTC(cLastUpdate));
         ps.setString(8, cLastUpdateBy);
         ps.setInt(9, cDivID);
         ps.executeUpdate();
@@ -45,9 +46,9 @@ public abstract class CustomerDAO {
             String cBy = rs.getString("Created_By");
             Timestamp lUpdate = rs.getTimestamp("Last_Update");
             String lUpdateBy = rs.getString("Last_Updated_By");
-            Integer dID = rs.getInt("Division_ID");
-            Customer customer = new Customer(Integer.parseInt(id), name, address, zip, phone, cDate, cBy, lUpdate,
-                    lUpdateBy, dID);
+            int dID = rs.getInt("Division_ID");
+            Customer customer = new Customer(Integer.parseInt(id), name, address, zip, phone, Helpers.utcToSystem(cDate)
+                    , cBy, Helpers.utcToSystem(lUpdate), lUpdateBy, dID);
             cList.add(customer);
         }
         return cList;
@@ -66,9 +67,9 @@ public abstract class CustomerDAO {
         ps.setString(2, cAddress);
         ps.setString(3, cZip);
         ps.setString(4, cPhone);
-        ps.setTimestamp(5, cCreatedOn);
+        ps.setTimestamp(5, Helpers.systemToUTC(cCreatedOn));
         ps.setString(6, cCreatedBy);
-        ps.setTimestamp(7, cLastUpdate);
+        ps.setTimestamp(7, Helpers.systemToUTC(cLastUpdate));
         ps.setString(8, cLastUpdateBy);
         ps.setInt(9, cDivID);
         ps.setInt(10, cID);

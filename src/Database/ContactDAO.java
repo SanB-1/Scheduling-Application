@@ -1,11 +1,8 @@
 package Database;
 
-import Model.Appointment;
 import Model.Contact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

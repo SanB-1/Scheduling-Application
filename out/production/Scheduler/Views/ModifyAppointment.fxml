@@ -26,13 +26,13 @@
                         <VBox layoutX="482.0" layoutY="85.0" prefHeight="366.0" prefWidth="232.0" spacing="22.0">
                            <children>
                               <TextField fx:id="modAppIDFIeld" disable="true" editable="false" />
-                              <TextField fx:id="modAppUIDField" />
-                              <TextField fx:id="modAppCustIDField" />
+                              <ComboBox fx:id="modAppUIDBox" prefHeight="27.0" prefWidth="248.0" />
+                              <ComboBox fx:id="modAppCustIDBox" prefHeight="27.0" prefWidth="248.0" />
                               <TextField fx:id="modAppTitleField" />
                               <TextField fx:id="modAppDescriptionField" />
-                              <ComboBox fx:id="modAppLocationBox" prefHeight="27.0" prefWidth="247.0" />
+                              <TextField fx:id="modAppLocationField" prefHeight="27.0" prefWidth="247.0" />
                               <ComboBox fx:id="modAppContactBox" prefHeight="27.0" prefWidth="248.0" />
-                              <ComboBox fx:id="modAppTypeBox" prefHeight="27.0" prefWidth="262.0" />
+                              <TextField fx:id="modAppTypeField" prefHeight="27.0" prefWidth="262.0" />
                               <DatePicker fx:id="modAppStartDate" prefHeight="27.0" prefWidth="317.0" />
                               <DatePicker fx:id="modAppEndDate" prefHeight="27.0" prefWidth="289.0" />
                            </children>
@@ -49,8 +49,8 @@
                         <Text layoutX="366.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" />
                         <Text layoutX="366.0" layoutY="478.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date &amp; Time:" />
                         <Text layoutX="366.0" layoutY="526.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date &amp;  Time:" />
-                        <ChoiceBox fx:id="modAppStartBox" layoutX="736.0" layoutY="460.0" prefWidth="150.0" />
-                        <ChoiceBox fx:id="modAppEndBox" layoutX="736.0" layoutY="508.0" prefWidth="150.0" />
+                        <ComboBox fx:id="modAppStartBox" layoutX="736.0" layoutY="460.0" prefWidth="150.0" />
+                        <ComboBox fx:id="modAppEndBox" layoutX="736.0" layoutY="508.0" prefWidth="150.0" />
                      </children>
                   </AnchorPane>
                </content>

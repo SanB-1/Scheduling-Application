@@ -8,7 +8,6 @@ import Model.Contact;
 import Utils.Helpers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -55,7 +54,7 @@ public class AddAppointment {
         addAppEndTimeBox.setItems(Helpers.times());
     }
 
-    public void onAddAppAddB(ActionEvent actionEvent) throws SQLException, IOException {
+    public void onAddAppAddB(ActionEvent actionEvent) {
 
         Timestamp start = Timestamp.valueOf(
                 addAppSelStartDate.getValue().toString() + " " + addAppStartTimeBox.getValue() + ":00.000");
@@ -70,9 +69,10 @@ public class AddAppointment {
             try {
                 AppointmentDAO.insert(addAppTitleField.getText(), addAppDescField.getText(),
                         addAppLocationField.getText(),addAppTypeField.getText(), start, end,
-                        new Timestamp(System.currentTimeMillis()), Login.currentUser,
-                        new Timestamp(System.currentTimeMillis()), Login.currentUser, addAppCustomerBox.getValue(),
-                        addAppUserBox.getValue(), ContactDAO.nameToID(addAppContactBox.getValue()));
+                        Helpers.systemToUTC(new Timestamp(System.currentTimeMillis())), Login.currentUser,
+                        Helpers.systemToUTC(new Timestamp(System.currentTimeMillis())), Login.currentUser,
+                        addAppCustomerBox.getValue(), addAppUserBox.getValue(),
+                        ContactDAO.nameToID(addAppContactBox.getValue()));
                 Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
             } catch (Exception e) {
                 Helpers.displayError(e, "Error: ");

@@ -3,17 +3,16 @@ package Controllers;
 import Database.*;
 import Model.Appointment;
 import Model.Contact;
-import Model.Customer;
 import Utils.Helpers;
+import com.mysql.cj.log.Log;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class ModifyAppointment {
@@ -33,6 +32,8 @@ public class ModifyAppointment {
     public ArrayList<String> uList = UsersDAO.userIDList();
     public ArrayList<String> cList = CustomerDAO.customerIDList();
     public ObservableList<Contact> coList = ContactDAO.select();
+    public Timestamp createdOn;
+    public String createdBy;
 
     public ModifyAppointment() throws SQLException {
     }
@@ -67,10 +68,37 @@ public class ModifyAppointment {
         modAppStartBox.getSelectionModel().select(
                 String.valueOf(appointment.getStart().toLocalDateTime().toLocalTime()));
         modAppEndBox.getSelectionModel().select(String.valueOf(appointment.getEnd().toLocalDateTime().toLocalTime()));
-
+        createdOn = appointment.getCreateDate();
+        createdBy = appointment.getCreatedBy();
     }
 
-    public void onModAppModB(ActionEvent actionEvent) {
+    public void onModAppModB(ActionEvent actionEvent) throws SQLException, IOException {
+        Timestamp start = Timestamp.valueOf(
+                modAppStartDate.getValue().toString() + " " + modAppStartBox.getValue() + ":00.000");
+        Timestamp end = Timestamp.valueOf(
+                modAppEndDate.getValue().toString() + " " + modAppEndBox.getValue() + ":00.000");
+        if (modAppUIDBox.getSelectionModel().getSelectedItem() == null ||
+                modAppCustIDBox.getSelectionModel().getSelectedItem() == null || modAppTitleField.getText().equals("")
+                || modAppDescriptionField.getText().equals("") || modAppLocationField.getText().equals("") ||
+                modAppContactBox.getSelectionModel().getSelectedItem() == null || modAppTypeField.getText().equals("")
+                || modAppStartDate.getValue() == null || modAppEndDate.getValue() == null ||
+                modAppStartBox.getSelectionModel().getSelectedItem() == null ||
+                modAppEndBox.getSelectionModel().getSelectedItem() == null){
+            Helpers.displayMessage("Please fill all the fields.");
+        }
+        else if (modAppStartDate.getValue().isAfter(modAppEndDate.getValue())){
+            Helpers.displayMessage("Invalid date/time combinations.");
+        }
+        else {
+            AppointmentDAO.update(modAppTitleField.getText(), modAppDescriptionField.getText(),
+                    modAppLocationField.getText(), modAppTypeField.getText(),
+                    start, end, createdOn, createdBy, new Timestamp(System.currentTimeMillis()), Login.currentUser,
+                    modAppCustIDBox.getSelectionModel().getSelectedItem(),
+                    modAppUIDBox.getSelectionModel().getSelectedItem(),
+                    ContactDAO.nameToID(modAppContactBox.getSelectionModel().getSelectedItem()),
+                    modAppIDFIeld.getText());
+            Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
+        }
     }
 
     public void onModAppCancelB(ActionEvent actionEvent) throws IOException {

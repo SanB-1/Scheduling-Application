@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public abstract class Helpers {
 
@@ -38,23 +36,30 @@ public abstract class Helpers {
         errorAlert.setHeaderText(message);
         errorAlert.showAndWait();
     }
-    public static Timestamp currentSystemToUTC(){
-        LocalDateTime dateTime = new Timestamp(System.currentTimeMillis()).toLocalDateTime();
-        ZonedDateTime systemZonedDateTime = dateTime.atZone(ZoneId.systemDefault());
-        ZonedDateTime utcZonedDateTime = systemZonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
-        LocalDateTime utcLocalDateTime = utcZonedDateTime.toLocalDateTime();
-        return Timestamp.valueOf(utcLocalDateTime);
+
+    public static Timestamp utcToSystem(Timestamp time) {
+        LocalDateTime DateTime = time.toLocalDateTime();
+        ZonedDateTime ZonedDateTime = DateTime.atZone(ZoneOffset.UTC);
+        ZonedDateTime systemZonedDateTime = ZonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
+        LocalDateTime systemLocalDateTime = systemZonedDateTime.toLocalDateTime();
+        return Timestamp.valueOf(systemLocalDateTime);
     }
 
     public static Timestamp systemToUTC(Timestamp time){
         LocalDateTime dateTime = time.toLocalDateTime();
-        ZonedDateTime systemZonedDateTime = dateTime.atZone(ZoneId.systemDefault());
-        ZonedDateTime utcZonedDateTime = systemZonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
+        ZonedDateTime ZonedDateTime = dateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime utcZonedDateTime = ZonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
         LocalDateTime utcLocalDateTime = utcZonedDateTime.toLocalDateTime();
         return Timestamp.valueOf(utcLocalDateTime);
     }
 
-
+    public static Timestamp utcToEST(Timestamp time) {
+        LocalDateTime DateTime = time.toLocalDateTime();
+        ZonedDateTime ZonedDateTime = DateTime.atZone(ZoneOffset.UTC);
+        ZonedDateTime easternZonedDateTime = ZonedDateTime.withZoneSameInstant(ZoneId.of("America/New_York"));
+        LocalDateTime easternLocalDateTime = easternZonedDateTime.toLocalDateTime();
+        return Timestamp.valueOf(easternLocalDateTime);
+    }
 
     public static ObservableList<String> times() {
         String[] timeArray = {

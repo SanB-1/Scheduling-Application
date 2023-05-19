@@ -10,8 +10,6 @@ import Utils.Helpers;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -31,7 +29,6 @@ public class ModifyCustomer {
     public String createdBy;
 
     public ModifyCustomer() throws SQLException {
-
     }
 
     public void initialize() {
@@ -73,8 +70,8 @@ public class ModifyCustomer {
                 CustomerDAO.update(Integer.parseInt(modCustIDField.getText()),
                         FirstDivisionDAO.divToID(modCustStateBox.getSelectionModel().getSelectedItem()),
                         modCustNameField.getText(), modCustAddressField.getText(), modCustZipField.getText(),
-                        modCustPhoneField.getText(), createdOn, createdBy, new Timestamp(System.currentTimeMillis()),
-                        Login.currentUser);
+                        modCustPhoneField.getText(), createdOn, createdBy,
+                        new Timestamp(System.currentTimeMillis()), Login.currentUser);
                 Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
             } catch (Exception e) {
                 Helpers.displayError(e, "Error: ");
