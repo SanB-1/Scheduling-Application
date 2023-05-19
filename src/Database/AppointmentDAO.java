@@ -184,4 +184,62 @@ public class AppointmentDAO {
         }
         return list;
     }
+
+    public static ObservableList<Appointment> byType(String inType) throws SQLException {
+        ObservableList<Appointment> app = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments WHERE Type = ?;";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setString(1, inType);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            Integer id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            Timestamp createDate = rs.getTimestamp("Create_Date");
+            String createdBy = rs.getString("Created_By");
+            Timestamp lastUpdate = rs.getTimestamp("Last_Update");
+            String lastUpdateBy = rs.getString("Last_Updated_By");
+            Integer customerID = rs.getInt("Customer_ID");
+            Integer userID = rs.getInt("User_ID");
+            Integer contactID = rs.getInt("Contact_ID");
+            Appointment appointment = new Appointment(id, title, description, location, type, Helpers.utcToSystem(start)
+                    , Helpers.utcToSystem(end), Helpers.utcToSystem(createDate), createdBy,
+                    Helpers.utcToSystem(lastUpdate), lastUpdateBy, customerID, userID, contactID);
+            app.add(appointment);
+        }
+        return app;
+    }
+
+    public static ObservableList<Appointment> byMonth(int month) throws SQLException {
+        ObservableList<Appointment> app = FXCollections.observableArrayList();
+        String sql = "SELECT *, MONTH(Start) FROM appointments WHERE MONTH(Start) = ?;";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setInt(1, month);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            Integer id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            Timestamp createDate = rs.getTimestamp("Create_Date");
+            String createdBy = rs.getString("Created_By");
+            Timestamp lastUpdate = rs.getTimestamp("Last_Update");
+            String lastUpdateBy = rs.getString("Last_Updated_By");
+            Integer customerID = rs.getInt("Customer_ID");
+            Integer userID = rs.getInt("User_ID");
+            Integer contactID = rs.getInt("Contact_ID");
+            Appointment appointment = new Appointment(id, title, description, location, type, Helpers.utcToSystem(start)
+                    , Helpers.utcToSystem(end), Helpers.utcToSystem(createDate), createdBy,
+                    Helpers.utcToSystem(lastUpdate), lastUpdateBy, customerID, userID, contactID);
+            app.add(appointment);
+        }
+        return app;
+    }
 }

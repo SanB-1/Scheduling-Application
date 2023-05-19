@@ -27,8 +27,8 @@ public class Main {
         refreshTables();
     }
 
-    public void onMakeReports(ActionEvent actionEvent) {
-
+    public void onMakeReports(ActionEvent actionEvent) throws IOException {
+        Helpers.nextScene(actionEvent, "/Views/Reports.fxml", "Reports");
     }
 
     public Tab mainMenuTab;
