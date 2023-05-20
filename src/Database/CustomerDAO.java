@@ -100,4 +100,16 @@ public abstract class CustomerDAO {
         }
         return cList;
     }
+
+    public static Integer nameToID(String name) throws SQLException {
+        int id = 0;
+        String sql = "SELECT Customer_ID FROM customers WHERE Customer_Name = ?;";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+             id = rs.getInt("Customer_ID");
+        }
+        return id;
+    }
 }

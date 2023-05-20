@@ -4,15 +4,13 @@ import Model.Country;
 import Model.FirstLevelDivision;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.*;
-import java.util.ArrayList;
 
 public abstract class CountryDAO {
 
-    public static ArrayList<Country> countryList() throws SQLException {
+    public static ObservableList<Country> countryList() throws SQLException {
 
-        ArrayList<Country> cList = new ArrayList<>();
+        ObservableList<Country> cList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM countries";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();

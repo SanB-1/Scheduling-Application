@@ -7,6 +7,7 @@ import Model.Country;
 import Model.Customer;
 import Model.FirstLevelDivision;
 import Utils.Helpers;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -24,7 +25,7 @@ public class ModifyCustomer {
     public ComboBox<String> modCustStateBox;
     public TextField modCustZipField;
     public TextField modCustPhoneField;
-    public ArrayList<Country> cList = CountryDAO.countryList();
+    public ObservableList<Country> cList = CountryDAO.countryList();
     public Timestamp createdOn;
     public String createdBy;
 

@@ -67,7 +67,7 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
-                            <Tab text="Sort By Month">
+                            <Tab text="This Month">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="238.0" prefWidth="1010.0">
                                        <children>
@@ -96,7 +96,7 @@
                                     </AnchorPane>
                               </content>
                             </Tab>
-                            <Tab text="Sort By Week">
+                            <Tab text="This Week">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -127,6 +127,7 @@
                             </Tab>
                           </tabs>
                         </TabPane>
+                        <Button layoutX="981.0" layoutY="11.0" mnemonicParsing="false" onAction="#onMakeReports" text="Make reports" />
                      </children>
                   </AnchorPane>
             </content>

@@ -5,6 +5,7 @@ import Database.CustomerDAO;
 import Model.Appointment;
 import Model.Customer;
 import Utils.Helpers;
+import com.mysql.cj.log.Log;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -158,8 +159,24 @@ public class Main {
     public TableColumn<Appointment, Integer> appointmentUserIDM;
     public TableColumn<Appointment, Integer> contactM;
 
-    public void onModifyMAppointment(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
+    public void onModifyMAppointment(ActionEvent actionEvent) throws IOException, SQLException {
+        if (appointmentsM.getSelectionModel().isEmpty()) {
+            Helpers.displayMessage("Select an Appointment.");
+        } else {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Views/ModifyAppointment.fxml"));
+            loader.load();
+
+            ModifyAppointment MAController = loader.getController();
+            MAController.popFields(appointmentsM.getSelectionModel().getSelectedItem());
+
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root, 1080, 700);
+            stage.setTitle("Appointment Modification");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onDeleteMAppointment(ActionEvent actionEvent) throws SQLException {
@@ -190,8 +207,24 @@ public class Main {
     public TableColumn<Appointment, Integer> appointmentUserIDW;
     public TableColumn<Appointment, Integer> contactW;
 
-    public void onModifyWAppointment(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Views/ModifyAppointment.fxml", "Appointment Modification");
+    public void onModifyWAppointment(ActionEvent actionEvent) throws IOException, SQLException {
+        if (appointmentsW.getSelectionModel().isEmpty()) {
+            Helpers.displayMessage("Select an Appointment.");
+        } else {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Views/ModifyAppointment.fxml"));
+            loader.load();
+
+            ModifyAppointment MAController = loader.getController();
+            MAController.popFields(appointmentsW.getSelectionModel().getSelectedItem());
+
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root, 1080, 700);
+            stage.setTitle("Appointment Modification");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onDeleteWAppointment(ActionEvent actionEvent) throws SQLException {
@@ -231,7 +264,7 @@ public class Main {
         appointmentUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
         contact.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
-        appointmentsM.setItems(AppointmentDAO.select());
+        appointmentsM.setItems(AppointmentDAO.allByCurrentMonth());
         appointmentIDM.setCellValueFactory(new PropertyValueFactory<>("ID"));
         appointmentTitleM.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentDescriptionM.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -243,7 +276,7 @@ public class Main {
         appointmentUserIDM.setCellValueFactory(new PropertyValueFactory<>("userID"));
         contactM.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
-        appointmentsW.setItems(AppointmentDAO.select());
+        appointmentsW.setItems(AppointmentDAO.allByCurrentWeek());
         appointmentIDW.setCellValueFactory(new PropertyValueFactory<>("ID"));
         appointmentTitleW.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentDescriptionW.setCellValueFactory(new PropertyValueFactory<>("description"));

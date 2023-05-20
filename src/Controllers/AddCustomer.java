@@ -6,6 +6,7 @@ import Database.FirstDivisionDAO;
 import Model.Country;
 import Model.FirstLevelDivision;
 import Utils.Helpers;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -22,7 +23,7 @@ public class AddCustomer {
     public ComboBox<String> addCustStateBox;
     public TextField addCustZipField;
     public TextField addCustPhoneField;
-    public ArrayList<Country> cList = CountryDAO.countryList();
+    public ObservableList<Country> cList = CountryDAO.countryList();
 
     public AddCustomer() throws SQLException {
     }

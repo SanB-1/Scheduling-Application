@@ -87,7 +87,7 @@ public class AddAppointment {
                         Helpers.systemToUTC(new Timestamp(System.currentTimeMillis())), Login.currentUser,
                         Helpers.systemToUTC(new Timestamp(System.currentTimeMillis())), Login.currentUser,
                         addAppCustomerBox.getValue(), addAppUserBox.getValue(),
-                        ContactDAO.nameToID(addAppContactBox.getValue()));
+                        Integer.toString(ContactDAO.nameToID(addAppContactBox.getValue())));
                 Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
             } catch (Exception e) {
                 Helpers.displayError(e, "Error: ");

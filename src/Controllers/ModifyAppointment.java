@@ -104,7 +104,7 @@ public class ModifyAppointment {
                     start, end, createdOn, createdBy, new Timestamp(System.currentTimeMillis()), Login.currentUser,
                     modAppCustIDBox.getSelectionModel().getSelectedItem(),
                     modAppUIDBox.getSelectionModel().getSelectedItem(),
-                    ContactDAO.nameToID(modAppContactBox.getSelectionModel().getSelectedItem()),
+                    Integer.toString(ContactDAO.nameToID(modAppContactBox.getSelectionModel().getSelectedItem())),
                     modAppIDFIeld.getText());
             Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
         }

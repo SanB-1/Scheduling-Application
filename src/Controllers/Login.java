@@ -15,7 +15,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.Year;
 import java.time.ZoneId;
+import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -32,6 +35,9 @@ public class Login {
     public String error;
     public static String currentUser;
     public static int currentUserID;
+    public static int currentYear = Year.now().getValue();
+    public static int currentMonth = LocalDateTime.now().getMonthValue();
+    public static int currentWeek = LocalDateTime.now().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
 
     public void initialize (){
         ResourceBundle rb = ResourceBundle.getBundle("Utils/nat", Locale.getDefault());
@@ -54,7 +60,7 @@ public class Login {
                 Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
             }
             else {
-                Helpers.displayMessage("You have no upcoming appointments.");
+                Helpers.displayMessage("You have no upcoming appointments within 15 minutes.");
                 Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
             }
         } else {

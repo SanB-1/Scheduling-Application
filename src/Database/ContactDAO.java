@@ -24,13 +24,13 @@ public class ContactDAO {
         return cont;
     }
 
-    public static String nameToID(String cName) throws SQLException {
+    public static Integer nameToID(String cName) throws SQLException {
         String sql = "SELECT Contact_ID FROM contacts WHERE Contact_Name = ?;";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
         ps.setString(1, cName);
         ResultSet rs = ps.executeQuery();
         rs.next();
-        return rs.getString("Contact_ID");
+        return rs.getInt("Contact_ID");
     }
 
     public static String IDtoName(int id) throws SQLException {

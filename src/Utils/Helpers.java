@@ -12,8 +12,26 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.*;
+import java.util.Hashtable;
 
 public abstract class Helpers {
+
+    public static Hashtable<String, Integer> months(){
+        Hashtable<String, Integer> months = new Hashtable<>();
+        months.put("January", 1);
+        months.put("February", 2);
+        months.put("March", 3);
+        months.put("April", 4);
+        months.put("May", 5);
+        months.put("June", 6);
+        months.put("July", 7);
+        months.put("August", 8);
+        months.put("September", 9);
+        months.put("October", 10);
+        months.put("November", 11);
+        months.put("December", 12);
+        return months;
+    }
 
     public static void nextScene(ActionEvent actionEvent, String location, String title) throws IOException {
         Parent root = FXMLLoader.load(Helpers.class.getResource(location));
@@ -91,4 +109,6 @@ public abstract class Helpers {
         times.addAll(timeArray);
         return times;
     }
+
+
 }

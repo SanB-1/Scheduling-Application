@@ -73,5 +73,4 @@ public class FirstDivisionDAO {
         rs.next();
         return rs.getInt("Country_ID");
     }
-
 }
