@@ -9,7 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
 import java.util.Hashtable;
@@ -110,5 +115,12 @@ public abstract class Helpers {
         return times;
     }
 
-
+    public static void log(String username, String sucOrFail) throws IOException {
+        String path = "login_activity.txt";
+        String attempt = sucOrFail + " login attempt. Username : \"" + username + "\". Date and Time: " +
+                new Timestamp(System.currentTimeMillis()) + "\n";
+        FileWriter writer = new FileWriter(path, true);
+        writer.write(attempt);
+        writer.close();
+    }
 }

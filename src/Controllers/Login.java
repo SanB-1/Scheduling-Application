@@ -50,6 +50,7 @@ public class Login {
 
     public void onLogin(ActionEvent actionEvent) throws SQLException, IOException {
         if (validate(usernameField.getText(), passwordField.getText())){
+            Helpers.log(usernameField.getText(), "Successful");
             ArrayList<Appointment> apps = AppointmentDAO.within15();
             if (!apps.isEmpty()){
                 for (Appointment app : apps){
@@ -63,6 +64,7 @@ public class Login {
                 Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
             }
         } else {
+            Helpers.log(usernameField.getText(), "Failed");
             Helpers.displayMessage(error);
         }
     }
