@@ -4,7 +4,6 @@ import Database.*;
 import Model.Appointment;
 import Model.Contact;
 import Utils.Helpers;
-import com.mysql.cj.log.Log;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
@@ -35,9 +34,17 @@ public class ModifyAppointment {
     public Timestamp createdOn;
     public String createdBy;
 
+    /**
+     * Class for the ModifyAppointment controller.
+     * @throws SQLException
+     */
     public ModifyAppointment() throws SQLException {
     }
 
+    /**
+     * Initializer Method:
+     * Populates all combo boxes.
+     */
     public void initialize() {
         for (String id : cList) {
             modAppCustIDBox.getItems().add(id);
@@ -54,6 +61,12 @@ public class ModifyAppointment {
         modAppEndBox.setItems(Helpers.times());
     }
 
+    /**
+     * Populates all the fields with the data extracted from the selected row.
+     * This method is called inside the Main controller so the selected Appointment can be used as an argument.
+     * @param appointment
+     * @throws SQLException
+     */
     public void popFields(Appointment appointment) throws SQLException {
         modAppIDFIeld.setText(appointment.getID().toString());
         modAppUIDBox.getSelectionModel().select(appointment.getUserID().toString());
@@ -72,6 +85,17 @@ public class ModifyAppointment {
         createdBy = appointment.getCreatedBy();
     }
 
+    /**
+     * Event for the "Modify Appointment" Button:
+     * Sets the "start" and "end" variables to timestamps with the selected values.
+     * Checks for invalid inputs.
+     * If all inputs are valid a new Appointment object is created and the old Appointment is updated via the
+     * Appointment DAO.
+     * The user is then returned to the Main view.
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onModAppModB(ActionEvent actionEvent) throws SQLException, IOException {
         Timestamp start = Timestamp.valueOf(
                 modAppStartDate.getValue().toString() + " " + modAppStartBox.getValue() + ":00.000");
@@ -89,12 +113,10 @@ public class ModifyAppointment {
         else if (modAppStartDate.getValue().isAfter(modAppEndDate.getValue())){
             Helpers.displayMessage("Invalid date/time combinations.");
         }
-        /*
         else if (Helpers.systemToEST(start).getHours() < 8 || Helpers.systemToEST(end).getHours() > 22){
             Helpers.displayMessage("Appointment not within business hours ( 8AM to 10PM EST).");
         }
-         */
-        else if (AppointmentDAO.overlap(start, Integer.parseInt(modAppIDFIeld.getText()),
+        else if (AppointmentDAO.overlap(start, end, Integer.parseInt(modAppIDFIeld.getText()),
                 Integer.parseInt(modAppCustIDBox.getSelectionModel().getSelectedItem()))){
             Helpers.displayMessage("This appointment is overlapping with a another appointment for the same customer.");
         }
@@ -110,6 +132,11 @@ public class ModifyAppointment {
         }
     }
 
+    /**
+     * Returns the user to the Main view upon clicking the "Cancel" button.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onModAppCancelB(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
     }

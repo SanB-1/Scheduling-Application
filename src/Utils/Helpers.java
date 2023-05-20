@@ -9,18 +9,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
 import java.util.Hashtable;
 
+/**
+ * Helpers Class.
+ */
 public abstract class Helpers {
 
+    /**
+     * Returns a hash table containing all Months and their respective numerical values.
+     * @return
+     */
     public static Hashtable<String, Integer> months(){
         Hashtable<String, Integer> months = new Hashtable<>();
         months.put("January", 1);
@@ -38,6 +41,13 @@ public abstract class Helpers {
         return months;
     }
 
+    /**
+     * Takes the user to the specified view.
+     * @param actionEvent
+     * @param location
+     * @param title
+     * @throws IOException
+     */
     public static void nextScene(ActionEvent actionEvent, String location, String title) throws IOException {
         Parent root = FXMLLoader.load(Helpers.class.getResource(location));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -47,6 +57,11 @@ public abstract class Helpers {
         stage.show();
     }
 
+    /**
+     * Displays an error with a customizable message.
+     * @param e
+     * @param message
+     */
     public static void displayError(Exception e, String message) {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(message);
@@ -54,12 +69,21 @@ public abstract class Helpers {
         e.printStackTrace();
     }
 
+    /**
+     * Displays a given message.
+     * @param message
+     */
     public static void displayMessage(String message) {
         Alert errorAlert = new Alert(Alert.AlertType.WARNING);
         errorAlert.setHeaderText(message);
         errorAlert.showAndWait();
     }
 
+    /**
+     * Converts UTC time to System time.
+     * @param time
+     * @return
+     */
     public static Timestamp utcToSystem(Timestamp time) {
         LocalDateTime dateTime = time.toLocalDateTime();
         ZonedDateTime zonedDateTime = dateTime.atZone(ZoneOffset.UTC);
@@ -68,6 +92,11 @@ public abstract class Helpers {
         return Timestamp.valueOf(systemLocalDateTime);
     }
 
+    /**
+     * Converts System time to UTC time.
+     * @param time
+     * @return
+     */
     public static Timestamp systemToUTC(Timestamp time){
         LocalDateTime dateTime = time.toLocalDateTime();
         ZonedDateTime zonedDateTime = dateTime.atZone(ZoneId.systemDefault());
@@ -76,6 +105,11 @@ public abstract class Helpers {
         return Timestamp.valueOf(utcLocalDateTime);
     }
 
+    /**
+     * Converts System time to EST time.
+     * @param time
+     * @return
+     */
     public static Timestamp systemToEST(Timestamp time) {
         LocalDateTime dateTime = time.toLocalDateTime();
         ZonedDateTime zonedDateTime = dateTime.atZone(ZoneId.systemDefault());
@@ -84,6 +118,10 @@ public abstract class Helpers {
         return Timestamp.valueOf(estLocalDateTime);
     }
 
+    /**
+     * Returns an ObservableList containing all the possible times for an appointment.
+     * @return
+     */
     public static ObservableList<String> times() {
         String[] timeArray = {
                 "00:00", "00:15", "00:30", "00:45",
@@ -115,6 +153,12 @@ public abstract class Helpers {
         return times;
     }
 
+    /**
+     * Logs a login attempt and whether it was successful or not.
+     * @param username
+     * @param sucOrFail
+     * @throws IOException
+     */
     public static void log(String username, String sucOrFail) throws IOException {
         String path = "login_activity.txt";
         String attempt = sucOrFail + " login attempt. Username : \"" + username + "\". Date and Time: " +

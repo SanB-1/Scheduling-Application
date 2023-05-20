@@ -19,13 +19,27 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Optional;
 
+/**
+ * AddAppointment Controller class.
+ */
 public class Main {
 
     public Button makeReports;
 
+    /**
+     * Method to throw the SQL Exception.
+     * @throws SQLException
+     */
     public void Main() throws SQLException {
     }
 
+    /**
+     * Initializer method:
+     * Sets the "cancel" button to take the user to the Reports view by using a lambda expression.
+     * Populates the combo box.
+     * Refreshes the tables.
+     * @throws SQLException
+     */
     public void initialize() throws SQLException{
 
         makeReports.setOnAction(e -> {
@@ -61,11 +75,25 @@ public class Main {
 
     public static Customer selectedCustomer;
 
+    /**
+     * This method is activated upon clicking the "Add Customer" button.
+     * Takes the user to the AddCustomer view.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {
-        selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
         Helpers.nextScene(actionEvent, "/Views/AddCustomer.fxml", "Customer Addition");
     }
 
+    /**
+     * This method is activated once the "Modify Customer" button is clicked.
+     * Displays a message if no Customer is selected.
+     * Takes the user to the ModifyCustomer view.
+     * Populates the fields in the ModifyCustomer view.
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void onModifyCustomer(ActionEvent actionEvent) throws IOException, SQLException {
         if (customerTable.getSelectionModel().isEmpty()) {
             Helpers.displayMessage("Select a Customer.");
@@ -86,6 +114,14 @@ public class Main {
         }
     }
 
+    /**
+     * This method is activated once the "Delete Customer" button is clicked.
+     * Displays a message if no customer is selected.
+     * Displays a message if the selected customer has related appointments.
+     * Confirms that the user wants to delete the customer and deletes the record if the user clicks "OK".
+     * Refreshes the tables.
+     * @throws SQLException
+     */
     public void onDeleteCustomer() throws SQLException {
         if (customerTable.getSelectionModel().isEmpty()){
             Helpers.displayMessage("Select a Customer.");
@@ -119,10 +155,24 @@ public class Main {
     public TableColumn<Appointment, Integer> appointmentUserID;
     public TableColumn<Appointment, Integer> contact;
 
+    /**
+     * Takes the user to the Add Appointment View.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onAddAppointment(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/AddAppointment.fxml", "Appointment Addition");
     }
 
+    /**
+     * This method is activated once the "Modify Appointment" button is clicked.
+     * Displays a message if no Appointment is selected.
+     * Takes the user to the ModifyAppointment view.
+     * Populates the fields in the ModifyAppointment view.
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void onModifyAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         if (appointments.getSelectionModel().isEmpty()) {
             Helpers.displayMessage("Select an Appointment.");
@@ -143,6 +193,13 @@ public class Main {
         }
     }
 
+    /**
+     * This method is activated once the "Delete Appointment" button is clicked.
+     * Displays a message if no Appointment is selected.
+     * Confirms that the user wants to delete the Appointment and deletes the record if the user clicks "OK".
+     * Refreshes the tables.
+     * @throws SQLException
+     */
     public void onDeleteAppointment() throws SQLException {
         if (appointments.getSelectionModel().isEmpty()) {
             Helpers.displayMessage("Select an Appointment.");
@@ -174,6 +231,12 @@ public class Main {
     public ObservableList<Appointment> byMonth = FXCollections.observableArrayList();
     public ComboBox<String> monthComboBox;
 
+    /**
+     * This method is activated upon selecting a month from the combo box.
+     * Updates the byMonth Observable List with all the correlating Appointments in the selected month.
+     * Refreshes all tables.
+     * @throws SQLException
+     */
     public void onMonth() throws SQLException {
         if (!monthComboBox.getSelectionModel().isEmpty()) {
             byMonth = AppointmentDAO.allByMonth(Helpers.months()
@@ -182,6 +245,15 @@ public class Main {
         }
     }
 
+    /**
+     * This method is activated once the "Modify M Appointment" button is clicked.
+     * Displays a message if no Appointment is selected.
+     * Takes the user to the ModifyAppointment view.
+     * Populates the fields in the ModifyAppointment view.
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void onModifyMAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         if (appointmentsM.getSelectionModel().isEmpty()) {
             Helpers.displayMessage("Select an Appointment.");
@@ -202,6 +274,13 @@ public class Main {
         }
     }
 
+    /**
+     * This method is activated once the "Delete M Appointment" button is clicked.
+     * Displays a message if no Appointment is selected.
+     * Confirms that the user wants to delete the Appointment and deletes the record if the user clicks "OK".
+     * Refreshes the tables.
+     * @throws SQLException
+     */
     public void onDeleteMAppointment() throws SQLException {
         if (appointmentsM.getSelectionModel().isEmpty()){
             Helpers.displayMessage("Select an Appointment.");
@@ -230,6 +309,15 @@ public class Main {
     public TableColumn<Appointment, Integer> appointmentUserIDW;
     public TableColumn<Appointment, Integer> contactW;
 
+    /**
+     * This method is activated once the "Modify W Appointment" button is clicked.
+     * Displays a message if no Appointment is selected.
+     * Takes the user to the ModifyAppointment view.
+     * Populates the fields in the ModifyAppointment view.
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void onModifyWAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         if (appointmentsW.getSelectionModel().isEmpty()) {
             Helpers.displayMessage("Select an Appointment.");
@@ -250,22 +338,33 @@ public class Main {
         }
     }
 
+    /**
+     * This method is activated once the "Delete W Appointment" button is clicked.
+     * Displays a message if no Appointment is selected.
+     * Confirms that the user wants to delete the Appointment and deletes the record if the user clicks "OK".
+     * Refreshes the tables.
+     * @throws SQLException
+     */
     public void onDeleteWAppointment() throws SQLException {
-        if (appointmentsM.getSelectionModel().isEmpty()){
+        if (appointmentsW.getSelectionModel().isEmpty()){
             Helpers.displayMessage("Select an Appointment.");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                     "Are you sure you would like to delete this appointment?");
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.isPresent() && choice.get() == ButtonType.OK) {
-                Appointment a = appointmentsM.getSelectionModel().getSelectedItem();
+                Appointment a = appointmentsW.getSelectionModel().getSelectedItem();
                 AppointmentDAO.delete(a.getID());
-                appointmentsM.getSelectionModel().clearSelection();
+                appointmentsW.getSelectionModel().clearSelection();
                 refreshTables();
             }
         }
     }
 
+    /**
+     * Populates all the tables with current data from the database.
+     * @throws SQLException
+     */
     private void refreshTables() throws SQLException {
         customerTable.setItems(CustomerDAO.select());
         customerID.setCellValueFactory(new PropertyValueFactory<>("ID"));

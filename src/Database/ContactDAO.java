@@ -7,8 +7,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class for the Contact DAO
+ */
 public class ContactDAO {
 
+    /**
+     * Returns an Observable List containing all the Contacts in the contact table.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Contact> select() throws SQLException {
         ObservableList<Contact> cont = FXCollections.observableArrayList();
         String sql = "SELECT * FROM contacts;";
@@ -24,6 +32,12 @@ public class ContactDAO {
         return cont;
     }
 
+    /**
+     * Returns the Contact ID corresponding to the selected Contact.
+     * @param cName
+     * @return
+     * @throws SQLException
+     */
     public static Integer nameToID(String cName) throws SQLException {
         String sql = "SELECT Contact_ID FROM contacts WHERE Contact_Name = ?;";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
@@ -33,6 +47,12 @@ public class ContactDAO {
         return rs.getInt("Contact_ID");
     }
 
+    /**
+     * Returns the Contact Name corresponding to the selected Contact ID.
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public static String IDtoName(int id) throws SQLException {
         String sql = "SELECT Contact_Name FROM contacts WHERE Contact_ID = ?;";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);

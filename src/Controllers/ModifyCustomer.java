@@ -29,15 +29,29 @@ public class ModifyCustomer {
     public Timestamp createdOn;
     public String createdBy;
 
+    /**
+     * Class for the ModifyCustomer controller.
+     * @throws SQLException
+     */
     public ModifyCustomer() throws SQLException {
     }
 
+    /**
+     * Initializer method:
+     * Populates the combo box.
+     */
     public void initialize() {
         for (Country c : cList){
             modCustCountryBox.getItems().add(c.getName());
         }
     }
 
+    /**
+     * Populates all the fields with the data extracted from the selected row.
+     * This method is called inside the Main controller so the selected Customer can be used as an argument.
+     * @param customer
+     * @throws SQLException
+     */
     public void popFields(Customer customer) throws SQLException {
         modCustIDField.setText(customer.getID().toString());
         modCustNameField.setText(customer.getName());
@@ -55,6 +69,13 @@ public class ModifyCustomer {
 
     }
 
+    /**
+     * Event for the "Modify Customer" Button:
+     * Checks for invalid inputs.
+     * If all inputs are valid a new Customer object is created and the old Customer is updated via the Customer DAO.
+     * The user is then returned to the Main view.
+     * @param actionEvent
+     */
     public void onModCustModB(ActionEvent actionEvent) {
         if (modCustStateBox.getSelectionModel().getSelectedItem() == null){
             Helpers.displayMessage("Please select a Country/State.");
@@ -80,17 +101,26 @@ public class ModifyCustomer {
         }
     }
 
+    /**
+     * Returns the user to the Main view upon clicking the "Cancel" button.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onModCustCancelB(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
     }
 
+    /**
+     * This method is activated once a new country is selected on the combo box.
+     * Clears the selected item in the First Division combo box if any are present.
+     * Populates the First Division combo box with locations belonging to the selected Country.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onMCountryComboBox(ActionEvent actionEvent) throws SQLException {
         modCustStateBox.getItems().clear();
         for (FirstLevelDivision div : FirstDivisionDAO.divsWhere(CountryDAO.countryToID(modCustCountryBox.getValue()))){
             modCustStateBox.getItems().add(div.getDivision());
         }
-    }
-
-    public void onMStateComboBox(ActionEvent actionEvent) {
     }
 }

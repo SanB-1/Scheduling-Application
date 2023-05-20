@@ -3,7 +3,9 @@ package Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-
+/**
+ * Class for the JDBC.
+ */
 public abstract class JDBC {
 
     private static final String databaseName = "client_schedule";
@@ -16,6 +18,9 @@ public abstract class JDBC {
     private static final String password = "Passw0rd!";
     public static Connection conn;
 
+    /**
+     * Establishes a connection to the database.
+     */
     public static void makeConnection() {
         try {
             Class.forName(driver);
@@ -26,6 +31,9 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Closes the connection to the database.
+     */
     public static void closeConnection() {
         try {
             conn.close();

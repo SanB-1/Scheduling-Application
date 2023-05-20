@@ -7,9 +7,24 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
 
-
+/**
+ * Class for the Customer DAO.
+ */
 public abstract class CustomerDAO {
 
+    /**
+     * Inserts a new Customer into the customers table.
+     * @param cName
+     * @param cAddress
+     * @param cZip
+     * @param cPhone
+     * @param cCreatedOn
+     * @param cCreatedBy
+     * @param cLastUpdate
+     * @param cLastUpdateBy
+     * @param cDivID
+     * @throws SQLException
+     */
     public static void insert(String cName, String cAddress, String cZip, String cPhone,
                              Timestamp cCreatedOn, String cCreatedBy, Timestamp cLastUpdate, String cLastUpdateBy,
                              int cDivID)
@@ -31,6 +46,11 @@ public abstract class CustomerDAO {
         ps.executeUpdate();
     }
 
+    /**
+     * Selects all Customers from the customers table.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Customer> select() throws SQLException {
         ObservableList<Customer> cList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM customers;";
@@ -55,6 +75,20 @@ public abstract class CustomerDAO {
 
     }
 
+    /**
+     * Updates the selected Appointment from the appointments table.
+     * @param cID
+     * @param cDivID
+     * @param cName
+     * @param cAddress
+     * @param cZip
+     * @param cPhone
+     * @param cCreatedOn
+     * @param cCreatedBy
+     * @param cLastUpdate
+     * @param cLastUpdateBy
+     * @throws SQLException
+     */
     public static void update(int cID, int cDivID, String cName, String cAddress, String cZip, String cPhone,
                              Timestamp cCreatedOn, String cCreatedBy, Timestamp cLastUpdate, String cLastUpdateBy)
         throws SQLException {
@@ -76,6 +110,11 @@ public abstract class CustomerDAO {
         ps.executeUpdate();
     }
 
+    /**
+     * Deletes the record corresponding to the selected Customer.
+     * @param cID
+     * @throws SQLException
+     */
     public static void delete(int cID) throws SQLException{
         String sql = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
@@ -88,6 +127,9 @@ public abstract class CustomerDAO {
         }
     }
 
+    /**
+     * Returns a list of all the Customer IDs.
+     */
     public static ArrayList<String> customerIDList() throws SQLException {
         ArrayList<String> cList = new ArrayList<>();
         String sql = "SELECT * FROM customers";
@@ -101,6 +143,12 @@ public abstract class CustomerDAO {
         return cList;
     }
 
+    /**
+     * Returns the Customer ID for the selected Customer.
+     * @param name
+     * @return
+     * @throws SQLException
+     */
     public static Integer nameToID(String name) throws SQLException {
         int id = 0;
         String sql = "SELECT Customer_ID FROM customers WHERE Customer_Name = ?;";

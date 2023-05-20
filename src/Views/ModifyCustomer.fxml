@@ -22,7 +22,7 @@
                         <TextField fx:id="modCustNameField" />
                         <TextField fx:id="modCustAddressField" />
                         <ComboBox fx:id="modCustCountryBox" onAction="#onMCountryComboBox" prefHeight="27.0" prefWidth="247.0" />
-                        <ComboBox fx:id="modCustStateBox" onAction="#onMStateComboBox" prefHeight="27.0" prefWidth="247.0" />
+                        <ComboBox fx:id="modCustStateBox" prefHeight="27.0" prefWidth="247.0" />
                         <TextField fx:id="modCustZipField" />
                         <TextField fx:id="modCustPhoneField" />
                      </children>

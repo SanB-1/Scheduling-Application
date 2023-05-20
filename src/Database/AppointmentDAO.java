@@ -3,19 +3,33 @@ package Database;
 import Controllers.Login;
 import Model.Appointment;
 import Utils.Helpers;
-import com.mysql.cj.log.Log;
-import com.sun.jdi.IntegerType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Class for the Appointment DAO
+ */
 public class AppointmentDAO {
 
+    /**
+     * Inserts a new Appointment into the appointments table.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param createDate
+     * @param createBy
+     * @param lastUpdate
+     * @param lastUpdateBy
+     * @param customerID
+     * @param userID
+     * @param contactID
+     * @throws SQLException
+     */
     public static void insert(String title, String description, String location, String type, Timestamp start,
                               Timestamp end, Timestamp createDate, String createBy, Timestamp lastUpdate,
                               String lastUpdateBy, String customerID, String userID, String contactID)
@@ -40,6 +54,11 @@ public class AppointmentDAO {
         ps.executeUpdate();
     }
 
+    /**
+     * Selects all Appointments from the appointments table.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> select() throws SQLException {
         ObservableList<Appointment> app = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments;";
@@ -68,6 +87,24 @@ public class AppointmentDAO {
         return app;
     }
 
+    /**
+     * Updates the selected Appointment from the appointments table.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param createDate
+     * @param createBy
+     * @param lastUpdate
+     * @param lastUpdateBy
+     * @param customerID
+     * @param userID
+     * @param contactID
+     * @param ID
+     * @throws SQLException
+     */
     public static void update(String title, String description, String location, String type, Timestamp start,
                               Timestamp end, Timestamp createDate, String createBy, Timestamp lastUpdate,
                               String lastUpdateBy, String customerID, String userID, String contactID, String ID)
@@ -94,6 +131,12 @@ public class AppointmentDAO {
         ps.executeUpdate();
     }
 
+    /**
+     * Deletes the selected Appointment from the appointments table.
+     * @param aID
+     * @return
+     * @throws SQLException
+     */
     public static int delete(int aID) throws SQLException{
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
@@ -107,6 +150,12 @@ public class AppointmentDAO {
         return rowsAffected;
     }
 
+    /**
+     * Selects all Appointments for the selected Customer from the appointments table.
+     * @param cID
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> appByCustID(int cID) throws SQLException {
         ObservableList<Appointment> app = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?;";
@@ -136,19 +185,36 @@ public class AppointmentDAO {
         return app;
     }
 
-    public static boolean overlap(Timestamp start, int aID, int cID) throws SQLException {
+    /**
+     * Returns "true" if there is an overlapping appointment with a different Appointment ID for the same Customer in
+     * the appointments table.
+     * @param start
+     * @param aID
+     * @param cID
+     * @return
+     * @throws SQLException
+     */
+    public static boolean overlap(Timestamp start, Timestamp end, int aID, int cID) throws SQLException {
         String sql = "SELECT Title, Appointment_ID, Customer_ID FROM appointments " +
-                "WHERE ? BETWEEN Start AND End " +
+                "WHERE (? BETWEEN Start AND End " +
+                "OR ? BETWEEN Start AND End) " +
                 "AND ? <> Appointment_ID " +
                 "AND ? = Customer_ID;";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
         ps.setTimestamp(1, Helpers.systemToUTC(start));
-        ps.setInt(3, cID);
-        ps.setInt(2, aID);
+        ps.setTimestamp(2, Helpers.systemToUTC(end));
+        ps.setInt(3, aID);
+        ps.setInt(4, cID);
         ResultSet rs = ps.executeQuery();
         return rs.next();
     }
 
+    /**
+     * Returns an arraylist containing all the Appointments happening within 15 minutes of the query in the appointments
+     * table.
+     * @return
+     * @throws SQLException
+     */
     public static ArrayList<Appointment> within15() throws SQLException {
         String sql = "SELECT * FROM appointments \n" +
                 "WHERE TIMESTAMPDIFF(MINUTE, ?, Start) <= 15\n" +
@@ -183,6 +249,13 @@ public class AppointmentDAO {
         return list;
     }
 
+    /**
+     * Returns an Observable List of all the Appointments in the appointments table containing the selected type.
+     * @param inType
+     * @param inID
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> byType(String inType, int inID) throws SQLException {
         ObservableList<Appointment> app = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Type = ? AND Customer_ID = ?;";
@@ -213,6 +286,14 @@ public class AppointmentDAO {
         return app;
     }
 
+    /**
+     * Returns an Observable List of all the Appointments in the appointments table during the selected month
+     * corresponding to the selected Customer.
+     * @param month
+     * @param inID
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> byMonth(int month, int inID) throws SQLException {
         ObservableList<Appointment> app = FXCollections.observableArrayList();
         String sql = "SELECT *, MONTH(Start) FROM appointments WHERE MONTH(Start) = ? AND Customer_ID = ?;";
@@ -243,6 +324,12 @@ public class AppointmentDAO {
         return app;
     }
 
+    /**
+     * Returns an Observable List of all the Appointments in the appointments table during the selected month.
+     * @param month
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> allByMonth(int month) throws SQLException {
         ObservableList<Appointment> app = FXCollections.observableArrayList();
         String sql = "SELECT *, MONTH(Start) FROM appointments WHERE MONTH(Start) = ?;";
@@ -272,6 +359,11 @@ public class AppointmentDAO {
         return app;
     }
 
+    /**
+     * Returns an Observable List of all the Appointments in the appointments during the current week.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> allByCurrentWeek() throws SQLException {
         ObservableList<Appointment> app = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE WEEK(Start, 1) = ? AND YEAR(Start) = ?";

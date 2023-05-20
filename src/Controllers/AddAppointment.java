@@ -18,6 +18,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+/**
+ * AddAppointment Controller class.
+ */
 public class AddAppointment {
 
     public TextField addAppIDField;
@@ -36,11 +39,20 @@ public class AddAppointment {
     public ArrayList<String> cList = CustomerDAO.customerIDList();
     public ObservableList<Contact> coList = ContactDAO.select();
 
+    /**
+     * Method to throw the SQLException.
+     * @throws SQLException
+     */
     public AddAppointment() throws SQLException {
     }
 
     public Button cancelButton;
 
+    /**
+     * Initializer method:
+     * Sets the "cancel" button to go back to the Main view by using a lambda expression.
+     * Populates the combo boxes.
+     */
     public void initialize() {
 
         cancelButton.setOnAction(e -> {
@@ -66,6 +78,16 @@ public class AddAppointment {
         addAppEndTimeBox.setItems(Helpers.times());
     }
 
+    /**
+     * Event for the "Add Appointment" Button:
+     * Sets the "start" and "end" variables to timestamps with the selected values.
+     * Checks for invalid inputs.
+     * If all inputs are valid a new Appointment object is created and inserted into the database by the
+     * Appointment DAO.
+     * The user is then returned to the Main view.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onAddAppAddB(ActionEvent actionEvent) throws SQLException {
 
         Timestamp start = Timestamp.valueOf(
@@ -88,7 +110,7 @@ public class AddAppointment {
         else if (Helpers.systemToEST(start).getHours() < 8 || Helpers.systemToEST(end).getHours() > 22){
             Helpers.displayMessage("Appointment not within business hours ( 8AM to 10PM EST).");
         }
-        else if (AppointmentDAO.overlap(start, -100,
+        else if (AppointmentDAO.overlap(start, end, -100,
                 Integer.parseInt(addAppCustomerBox.getSelectionModel().getSelectedItem()))){
             Helpers.displayMessage("This appointment is overlapping with a another appointment for the same customer.");
         }

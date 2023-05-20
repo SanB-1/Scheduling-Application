@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * Reports Controller class.
+ * @throws SQLException
+ */
 public class Reports {
 
     public RadioButton radioByMonth;
@@ -29,10 +33,18 @@ public class Reports {
     public ObservableList<Contact> coList = ContactDAO.select();
     public ObservableList<Country> countryList = CountryDAO.countryList();
 
-
+    /**
+     * Method to throw the SQLException.
+     * @throws SQLException
+     */
     public Reports() throws SQLException {
     }
 
+    /**
+     * Initializer method:
+     * Populates the combo boxes.
+     * Creates a toggle group for the radio buttons.
+     */
     public void initialize(){
         for (Customer c : cuList) {
             customerComboBox.getItems().add(c.getName());
@@ -68,6 +80,14 @@ public class Reports {
 
     }
 
+    /**
+     * This method is activated once a Customer is selected from the combo box.
+     * Resets the value of totalApps.
+     * Clears the selection on both combo boxes.
+     * Enables the combo boxes and radio buttons and selects the Type radio button if both combo boxes are
+     * already disabled.
+     * @param actionEvent
+     */
     public void onCustomerComboBox(ActionEvent actionEvent) {
         totalApps.setText("");
         byTypeBox.getSelectionModel().clearSelection();
@@ -80,6 +100,13 @@ public class Reports {
         }
     }
 
+    /**
+     * This method is activated once the by month radio button is selected.
+     * Resets the value of totalApps.
+     * Enables the by month combo box, disables the by type combo box and clears the selected item in the by type combo
+     * box.
+     * @param actionEvent
+     */
     public void onRadioByMonth(ActionEvent actionEvent) {
         totalApps.setText("");
         byTypeBox.setDisable(true);
@@ -87,6 +114,13 @@ public class Reports {
         byMonthBox.setDisable(false);
     }
 
+    /**
+     * This method is activated once the by type radio button is selected.
+     * Resets the value of totalApps.
+     * Enables the by type combo box, disables the by month combo box and clears the selected item in the by month combo
+     * box.
+     * @param actionEvent
+     */
     public void onRadioByType(ActionEvent actionEvent) {
         totalApps.setText("");
         byTypeBox.setDisable(false);
@@ -94,6 +128,13 @@ public class Reports {
         byMonthBox.setDisable(true);
     }
 
+    /**
+     * This method is activated once a type is selected from the combo box.
+     * If a type is selected, the value of totalApps is set to the number of Appointments for the selected customer
+     * and type.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onByTypeBox(ActionEvent actionEvent) throws SQLException {
         if (!byTypeBox.getSelectionModel().isEmpty()) {
             ObservableList<Appointment> byType = AppointmentDAO.byType(byTypeBox.getSelectionModel().getSelectedItem(),
@@ -108,6 +149,13 @@ public class Reports {
         }
     }
 
+    /**
+     * This method is activated once a month is selected from the combo box.
+     * If a month is selected, the value of totalApps is set to the number of Appointments for the selected customer
+     * and month.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onByMonthBox(ActionEvent actionEvent) throws SQLException {
         if (!byMonthBox.getSelectionModel().isEmpty()) {
             ObservableList<Appointment> byMonth = AppointmentDAO.byMonth(
@@ -134,6 +182,13 @@ public class Reports {
 
     public ComboBox<String> contactBox;
 
+    /**
+     * This method is activated once a Contact is selected from the combo box.
+     * Creates an observable list and populates it with all the Appointments for the selected Contact.
+     * Populates the tableview.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onContactBox(ActionEvent actionEvent) throws SQLException {
         ObservableList<Appointment> appointmentsByContact = FXCollections.observableArrayList();
         for (Appointment a : appList){
@@ -161,6 +216,13 @@ public class Reports {
     public TableColumn<Customer, String> customerPhone;
     public TableColumn<Customer, Integer> divID;
 
+    /**
+     * This method is activated once a Country is selected from the combo box.
+     * Creates an observable list and populates it with all the Customers in the selected Country.
+     * Populates the tableview.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onCountryComboBox(ActionEvent actionEvent) throws SQLException {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
         for (Customer c : cuList){
@@ -178,6 +240,11 @@ public class Reports {
         divID.setCellValueFactory(new PropertyValueFactory<>("divID"));
     }
 
+    /**
+     * Returns the user to the main view.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onReturn(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
     }

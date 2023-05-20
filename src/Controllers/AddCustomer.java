@@ -13,8 +13,10 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
+/**
+ * AddCustomer Controller class.
+ */
 public class AddCustomer {
 
     public TextField addCustNameField;
@@ -25,16 +27,32 @@ public class AddCustomer {
     public TextField addCustPhoneField;
     public ObservableList<Country> cList = CountryDAO.countryList();
 
+    /**
+     * Method to throw the SQLException.
+     * @throws SQLException
+     */
     public AddCustomer() throws SQLException {
     }
 
-
+    /**
+     * Initializer method:
+     * Populates the combo box.
+     */
     public void initialize() {
         for (Country c : cList){
             addCustCountryBox.getItems().add(c.getName());
         }
     }
 
+    /**
+     * Event for the "Add Customer" Button:
+     * Checks for invalid inputs.
+     * If all inputs are valid a new Customer object is created and inserted into the database by the Customer DAO.
+     * The user is then returned to the Main view.
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onAddCustAddB(ActionEvent actionEvent) throws SQLException, IOException {
         if (addCustStateBox.getSelectionModel().getSelectedItem() == null ||
                 addCustCountryBox.getSelectionModel().getSelectedItem() == null){
@@ -60,10 +78,24 @@ public class AddCustomer {
         }
     }
 
+    /**
+     * Returns the user back to the Main view after pressing the "Cancel" Button.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addAddCustCancelB(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
     }
 
+
+    /**
+     * This method is activated once a country is selected on the combo box.
+     * Clears the selected item in the First Division combo box if any are present.
+     * Enables the user to edit the First Division combo box if it is disabled.
+     * Populates the First Division combo box with locations belonging to the selected Country.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onCCombobox(ActionEvent actionEvent) throws SQLException {
         addCustStateBox.getItems().clear();
         addCustStateBox.setDisable(false);
@@ -71,11 +103,4 @@ public class AddCustomer {
             addCustStateBox.getItems().add(div.getDivision());
         }
     }
-
-    public void onSComboBox(ActionEvent actionEvent) throws SQLException {
-    }
-
-
-
-
 }
