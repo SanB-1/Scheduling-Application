@@ -5,7 +5,7 @@ import Database.CustomerDAO;
 import Model.Appointment;
 import Model.Customer;
 import Utils.Helpers;
-import com.mysql.cj.log.Log;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -25,18 +25,24 @@ public class Main {
     }
 
     public void initialize() throws SQLException{
+        monthComboBox.getItems().add("January");
+        monthComboBox.getItems().add("February");
+        monthComboBox.getItems().add("March");
+        monthComboBox.getItems().add("April");
+        monthComboBox.getItems().add("May");
+        monthComboBox.getItems().add("June");
+        monthComboBox.getItems().add("July");
+        monthComboBox.getItems().add("August");
+        monthComboBox.getItems().add("September");
+        monthComboBox.getItems().add("October");
+        monthComboBox.getItems().add("November");
+        monthComboBox.getItems().add("December");
         refreshTables();
     }
 
     public void onMakeReports(ActionEvent actionEvent) throws IOException {
         Helpers.nextScene(actionEvent, "/Views/Reports.fxml", "Reports");
     }
-
-    public Tab mainMenuTab;
-    public Tab addCTab;
-    public Tab modCTab;
-    public Tab addAppTab;
-    public Tab modAppTab;
 
     public TableView<Customer> customerTable;
     public TableColumn<Customer, Integer> customerID;
@@ -158,6 +164,16 @@ public class Main {
     public TableColumn<Appointment, Integer> appointmentCustomerIDM;
     public TableColumn<Appointment, Integer> appointmentUserIDM;
     public TableColumn<Appointment, Integer> contactM;
+    public ObservableList<Appointment> byMonth = FXCollections.observableArrayList();
+    public ComboBox<String> monthComboBox;
+
+    public void onMonth(ActionEvent actionEvent) throws SQLException {
+        if (!monthComboBox.getSelectionModel().isEmpty()) {
+            byMonth = AppointmentDAO.allByMonth(Helpers.months()
+                    .get(monthComboBox.getSelectionModel().getSelectedItem()));
+            refreshTables();
+        }
+    }
 
     public void onModifyMAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         if (appointmentsM.getSelectionModel().isEmpty()) {
@@ -264,7 +280,7 @@ public class Main {
         appointmentUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
         contact.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
-        appointmentsM.setItems(AppointmentDAO.allByCurrentMonth());
+        appointmentsM.setItems(byMonth);
         appointmentIDM.setCellValueFactory(new PropertyValueFactory<>("ID"));
         appointmentTitleM.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentDescriptionM.setCellValueFactory(new PropertyValueFactory<>("description"));

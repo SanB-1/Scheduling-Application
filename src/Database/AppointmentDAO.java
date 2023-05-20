@@ -243,12 +243,11 @@ public class AppointmentDAO {
         return app;
     }
 
-    public static ObservableList<Appointment> allByCurrentMonth() throws SQLException {
+    public static ObservableList<Appointment> allByMonth(int month) throws SQLException {
         ObservableList<Appointment> app = FXCollections.observableArrayList();
-        String sql = "SELECT *, MONTH(Start) FROM appointments WHERE MONTH(Start) = ? AND YEAR(Start) = ?;";
+        String sql = "SELECT *, MONTH(Start) FROM appointments WHERE MONTH(Start) = ?;";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);
-        ps.setInt(1, Login.currentMonth);
-        ps.setInt(2, Login.currentYear);
+        ps.setInt(1, month);
         ResultSet rs = ps.executeQuery();
         while (rs.next()){
             Integer id = rs.getInt("Appointment_ID");
