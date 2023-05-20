@@ -8,6 +8,7 @@ import Model.Contact;
 import Utils.Helpers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -38,7 +39,18 @@ public class AddAppointment {
     public AddAppointment() throws SQLException {
     }
 
+    public Button cancelButton;
+
     public void initialize() {
+
+        cancelButton.setOnAction(e -> {
+            try {
+                Helpers.nextScene(e, "/Views/Main.fxml", "Reports");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+
         for (String id : cList) {
             addAppCustomerBox.getItems().add(id);
         }
@@ -93,9 +105,5 @@ public class AddAppointment {
                 Helpers.displayError(e, "Error: ");
             }
         }
-    }
-
-    public void onAddAppCancelB (ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Views/Main.fxml", "Main Menu");
     }
 }

@@ -21,10 +21,21 @@ import java.util.Optional;
 
 public class Main {
 
+    public Button makeReports;
+
     public void Main() throws SQLException {
     }
 
     public void initialize() throws SQLException{
+
+        makeReports.setOnAction(e -> {
+            try {
+                Helpers.nextScene(e, "/Views/Reports.fxml", "Reports");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+
         monthComboBox.getItems().add("January");
         monthComboBox.getItems().add("February");
         monthComboBox.getItems().add("March");
@@ -38,10 +49,6 @@ public class Main {
         monthComboBox.getItems().add("November");
         monthComboBox.getItems().add("December");
         refreshTables();
-    }
-
-    public void onMakeReports(ActionEvent actionEvent) throws IOException {
-        Helpers.nextScene(actionEvent, "/Views/Reports.fxml", "Reports");
     }
 
     public TableView<Customer> customerTable;
@@ -79,7 +86,7 @@ public class Main {
         }
     }
 
-    public void onDeleteCustomer(ActionEvent actionEvent) throws SQLException {
+    public void onDeleteCustomer() throws SQLException {
         if (customerTable.getSelectionModel().isEmpty()){
             Helpers.displayMessage("Select a Customer.");
         }
@@ -136,7 +143,7 @@ public class Main {
         }
     }
 
-    public void onDeleteAppointment(ActionEvent actionEvent) throws SQLException {
+    public void onDeleteAppointment() throws SQLException {
         if (appointments.getSelectionModel().isEmpty()) {
             Helpers.displayMessage("Select an Appointment.");
         } else {
@@ -167,7 +174,7 @@ public class Main {
     public ObservableList<Appointment> byMonth = FXCollections.observableArrayList();
     public ComboBox<String> monthComboBox;
 
-    public void onMonth(ActionEvent actionEvent) throws SQLException {
+    public void onMonth() throws SQLException {
         if (!monthComboBox.getSelectionModel().isEmpty()) {
             byMonth = AppointmentDAO.allByMonth(Helpers.months()
                     .get(monthComboBox.getSelectionModel().getSelectedItem()));
@@ -195,7 +202,7 @@ public class Main {
         }
     }
 
-    public void onDeleteMAppointment(ActionEvent actionEvent) throws SQLException {
+    public void onDeleteMAppointment() throws SQLException {
         if (appointmentsM.getSelectionModel().isEmpty()){
             Helpers.displayMessage("Select an Appointment.");
         } else {
@@ -243,7 +250,7 @@ public class Main {
         }
     }
 
-    public void onDeleteWAppointment(ActionEvent actionEvent) throws SQLException {
+    public void onDeleteWAppointment() throws SQLException {
         if (appointmentsM.getSelectionModel().isEmpty()){
             Helpers.displayMessage("Select an Appointment.");
         } else {

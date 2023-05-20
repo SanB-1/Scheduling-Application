@@ -34,7 +34,7 @@
                      </children>
                   </VBox>
                   <Button layoutX="671.0" layoutY="558.0" mnemonicParsing="false" onAction="#onAddAppAddB" text="Add" />
-                  <Button layoutX="367.0" layoutY="558.0" mnemonicParsing="false" onAction="#onAddAppCancelB" text="Cancel" />
+                  <Button fx:id="cancelButton" layoutX="367.0" layoutY="558.0" mnemonicParsing="false" text="Cancel" />
                   <Text layoutX="366.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User ID:" wrappingWidth="105.47866439819336" />
                   <Text layoutX="366.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID:" wrappingWidth="105.47866439819336" />
                   <Text layoutX="366.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title:" wrappingWidth="105.47866439819336" />
